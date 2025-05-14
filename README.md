@@ -1,5 +1,8 @@
 # event-reward-management-server
 실행 방법 (Docker Compose)<br>
+docker-compose build --no-cache
+docker-compose up
+
 version<br>
 Node.js 18<br>
 NestJS 최신<br>
