@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    networks:
+      - backend
+
+  auth:
+    build:
+      context: ./auth
+    container_name: auth
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/auth-db
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+
+  event:
+    build:
+      context: ./event
+    container_name: event
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/event-db
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+
+volumes:
+  mongo-data:
+
+networks:
+  backend:
+    driver: bridge
