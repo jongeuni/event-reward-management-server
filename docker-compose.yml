@@ -14,14 +14,16 @@ services:
 
   gateway:
     build:
-      context: ./gateway
+      context: .
+      dockerfile: ./gateway/Dockerfile
     container_name: gateway
     networks:
       - backend
 
   auth:
     build:
-      context: ./auth
+      context: .
+      dockerfile: ./auth/Dockerfile
     container_name: auth
     ports:
       - "3001:3001"
@@ -34,7 +36,8 @@ services:
 
   event:
     build:
-      context: ./event
+      context: .
+      dockerfile: ./event/Dockerfile
     container_name: event
     ports:
       - "3002:3002"

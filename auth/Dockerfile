@@ -4,10 +4,11 @@ FROM node:18
 WORKDIR /app
 
 COPY package*.json ./
+COPY tsconfig*.json ./
+COPY libs ./libs
+COPY auth ./auth
 RUN npm install
 
-COPY . .
+RUN npm run build  # 빌드 실행
 
-RUN npm run build
-
-CMD ["node", "dist/main"]
+CMD ["node", "auth/dist/main.js"]

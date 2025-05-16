@@ -1,5 +1,6 @@
 import { Controller, Inject, Post, Req } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { AccountCreateRq } from '@model/user/account-create.rq';
 
 @Controller('/v1/accounts')
 export class AccountGatewayController {
@@ -9,7 +10,7 @@ export class AccountGatewayController {
   ) {}
 
   @Post()
-  handleUserRequests(@Req() req: Request) {
-    return this.accountService.send({ cmd: 'create-account' }, req.body);
+  handleAccountCreate(@Req() req: AccountCreateRq): any {
+    return this.accountService.send({ cmd: 'create-account' }, req);
   }
 }
