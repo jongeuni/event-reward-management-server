@@ -16,5 +16,9 @@ export class AccountRepository{
     return await this.accountModel.create(createUserDto);
   }
 
+  async findByEmail(email: string): Promise<Account | null> {
+    return this.accountModel.findOne({email}).lean().exec();
+  }
+
 
 }

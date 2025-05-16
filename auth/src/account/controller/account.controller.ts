@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AccountService } from '../service/account.service';
 import { SignUpRq } from './rqrs/sign-up.rq';
+import { SignInRq } from './rqrs/sign-in.rq';
 
 @Controller()
 export class AccountController {
@@ -9,5 +10,10 @@ export class AccountController {
   @Post('/sign-up')
   async signUp(@Body() rq: SignUpRq) {
     return this.accountService.signUp(rq);
+  }
+
+  @Post('/sign-in')
+  async signIn(@Body() rq: SignInRq) {
+    return this.accountService.signIn(rq);
   }
 }

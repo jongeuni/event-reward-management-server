@@ -10,6 +10,7 @@ export class Account {
   name: string;
 
   @Prop({ required: true })
+  // 중복 안됨 ~~!!
   email: string;
 
   @Prop({ required: true })
