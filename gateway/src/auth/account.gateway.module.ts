@@ -1,14 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AccountGatewayController } from './controller/account.gateway.controller';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      { name: 'ACCOUNT_SERVICE', transport: Transport.TCP },
-      { name: 'PRODUCT_SERVICE', transport: Transport.TCP },
-    ]),
-  ],
+  imports: [HttpModule],
   controllers: [AccountGatewayController],
 })
 export class AccountGatewayModule {}

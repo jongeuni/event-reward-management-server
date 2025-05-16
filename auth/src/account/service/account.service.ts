@@ -14,6 +14,7 @@ export class AccountService {
               private readonly jwtUtil: JwtUtil) {}
 
   async signUp(rq: SignUpRq): Promise<SignUpRs> {
+    console.log(rq)
 
     const account: Account =  await this.accountRepository.create({
       email: rq.email,
