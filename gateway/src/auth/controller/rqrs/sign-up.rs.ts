@@ -1,4 +1,4 @@
-import { AccountRole } from './account-role';
+import { UserRole } from './user-role';
 
 
 /**
@@ -12,7 +12,7 @@ export interface SignUpRs {
 
   email: string;
 
-  role: AccountRole;
+  role: UserRole;
 
   accessToken: string;
 

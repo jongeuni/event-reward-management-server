@@ -7,7 +7,7 @@ import { SignInRq } from './rqrs/sign-in.rq';
 import { SignInRs } from './rqrs/sign-in.rs';
 
 @Controller('/v1')
-export class AccountGatewayController {
+export class UserGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
   @Post('/sign-up')

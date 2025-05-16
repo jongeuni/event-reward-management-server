@@ -1,4 +1,4 @@
-import { AccountRole } from '../../account-role';
+import { UserRole } from '../../user-role';
 
 /**
  * 회원가입 Rq
@@ -11,7 +11,7 @@ export interface SignUpRs {
 
   email: string;
 
-  role: AccountRole;
+  role: UserRole;
 
   accessToken: string;
 

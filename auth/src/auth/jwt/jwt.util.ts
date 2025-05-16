@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { AccountRole } from '../../account/account-role';
+import { UserRole } from '../../user/user-role';
 import { ObjectId } from 'mongoose';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class JwtUtil {
   private readonly access_expires_in = '5m';
   private readonly refresh_expires_in = '5m';
 
-  async createJwtToken(id: ObjectId, email: string, role: AccountRole) {
+  async createJwtToken(id: ObjectId, email: string, role: UserRole) {
     const [accessToken, refreshToken] = await Promise.all([
       this.createAccessToken(id, email, role),
       this.createRefreshToken(id, email, role)
@@ -24,7 +24,7 @@ export class JwtUtil {
     };
   }
 
-  private createAccessToken(id: ObjectId, email: string, role: AccountRole): string {
+  private createAccessToken(id: ObjectId, email: string, role: UserRole): string {
     return this.jwtService.sign(
       {
         id,
@@ -39,7 +39,7 @@ export class JwtUtil {
     );
   }
 
-  private createRefreshToken(id: ObjectId, email: string, role: AccountRole): string {
+  private createRefreshToken(id: ObjectId, email: string, role: UserRole): string {
     return this.jwtService.sign(
       {
         id,

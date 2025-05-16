@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AccountService } from '../service/account.service';
+import { UserService } from '../service/user.service';
 import { SignUpRq } from './rqrs/sign-up.rq';
 import { SignInRq } from './rqrs/sign-in.rq';
 
 @Controller()
-export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+export class UserController {
+  constructor(private readonly accountService: UserService) {}
 
   @Post('/sign-up')
   async signUp(@Body() rq: SignUpRq) {
