@@ -7,7 +7,7 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post('/sign-up')
-  async signIn(@Body() rq: SignUpRq) {
-    return this.accountService.signIn(rq);
+  async signUp(@Body() rq: SignUpRq) {
+    return this.accountService.signUp(rq);
   }
 }

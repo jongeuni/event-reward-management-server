@@ -6,7 +6,8 @@ import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongodb:27017/auth-db'),
+    // MongooseModule.forRoot('mongodb://mongodb:27017/auth-db'),
+    MongooseModule.forRoot('mongodb://localhost:27017/auth-db'),
     AccountModule,
   ],
   controllers: [AppController],
