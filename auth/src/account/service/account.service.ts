@@ -3,6 +3,7 @@ import { SignUpRq } from '../controller/rqrs/sign-up.rq';
 import { SignUpRs } from '../controller/rqrs/sign-up.rs';
 import { AccountRepository } from '../repository/account.repository';
 import { Account } from '../account';
+import * as bcrypt from 'bcrypt';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AccountService {
@@ -13,7 +14,7 @@ export class AccountService {
     const account: Account =  await this.accountRepository.create({
       email,
       name: nickname,
-      password,
+      password: await bcrypt.hash(password, 10),
       role: "USER"
     });
 
