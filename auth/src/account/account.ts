@@ -1,22 +1,26 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, ObjectId, Types } from 'mongoose';
 import { AccountRole } from './account-role';
 
 export type AccountDocument = Account & Document;
 
 @Schema()
 export class Account {
+  _id: ObjectId;
+
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  // 중복 안됨 ~~!!
+  @Prop({
+    required: true,
+    unique: true,
+  })
   email: string;
 
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true, defaultOptions: 'USER' })
+  @Prop({ required: true, default: 'USER' })
   role: AccountRole;
 }
 

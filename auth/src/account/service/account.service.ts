@@ -6,10 +6,12 @@ import { Account } from '../account';
 import * as bcrypt from 'bcrypt';
 import { SignInRq } from '../controller/rqrs/sign-in.rq';
 import { SignInRs } from '../controller/rqrs/sign-in.rs';
+import { JwtUtil } from '../../auth/jwt/jwt.util';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AccountService {
-  constructor(private readonly accountRepository: AccountRepository) {}
+  constructor(private readonly accountRepository: AccountRepository,
+              private readonly jwtUtil: JwtUtil) {}
 
   async signUp(rq: SignUpRq): Promise<SignUpRs> {
 
@@ -24,8 +26,7 @@ export class AccountService {
       nickname: account.name,
       email: account.email,
       role: account.role,
-      accessToken: "",
-      refreshToken: ""
+      ...await this.jwtUtil.createJwtToken(account._id, account.email, account.role)
     }
   }
 
@@ -41,8 +42,7 @@ export class AccountService {
     }
 
     return {
-      accessToken: "true",
-      refreshToken: "true"
+      ...await this.jwtUtil.createJwtToken(account._id, account.email, account.role)
     }
   }
 }
