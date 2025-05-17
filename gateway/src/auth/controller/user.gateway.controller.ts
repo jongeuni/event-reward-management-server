@@ -1,27 +1,19 @@
-import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { SignUpRq } from './rqrs/sign-up.rq';
 import { SignUpRs } from './rqrs/sign-up.rs';
-import { SignInRq } from './rqrs/sign-in.rq';
-import { SignInRs } from './rqrs/sign-in.rs';
+import { ApiOperation } from '@nestjs/swagger';
 
-@Controller('/v1')
+@Controller('/v1/user')
 export class UserGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
-  @Post('/sign-up')
+  @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성합니다.' })
+  @Post()
   async signUp(@Body() rq: SignUpRq): Promise<SignUpRs> {
     const response = await firstValueFrom(
       this.httpService.post<SignUpRs>('http://127.0.0.1:3001/sign-up', rq),
-    );
-    return response.data;
-  }
-
-  @Post('/sign-in')
-  async signIn(@Body() rq: SignInRq): Promise<SignInRs> {
-    const response = await firstValueFrom(
-      this.httpService.post<SignInRs>('http://127.0.0.1:3001/sign-in', rq),
     );
     return response.data;
   }
