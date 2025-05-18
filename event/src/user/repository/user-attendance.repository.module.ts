@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserAttendance, UserAttendanceSchema } from './user-attendance';
+import {
+  UserAttendance,
+  UserAttendanceSchema,
+} from '../schema/user-attendance';
 
 @Module({
   imports: [

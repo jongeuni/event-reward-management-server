@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserAttendanceService } from './user-attendance.service';
+import { UserAttendanceService } from './service/user-attendance.service';
 
 @Controller()
 export class UserAttendanceController {

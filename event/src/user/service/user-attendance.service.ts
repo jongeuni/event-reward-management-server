@@ -1,4 +1,4 @@
-import { UserAttendanceRepository } from './user-attendance.repository';
+import { UserAttendanceRepository } from '../repository/user-attendance.repository';
 import { Injectable, Scope } from '@nestjs/common';
 
 @Injectable({ scope: Scope.REQUEST })
