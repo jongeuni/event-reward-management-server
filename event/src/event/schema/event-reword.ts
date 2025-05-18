@@ -1,7 +1,7 @@
 // event/schemas/event-reward.schema.ts
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
 
-export type EventRewardType = 'item' | 'currency' | 'title';
+export type EventRewardType = 'item' | 'cash' | 'title';
 
 export class EventReward {
   @Prop({ required: true })
@@ -16,10 +16,10 @@ export class EventReward {
   itemId?: string;
 
   @Prop()
-  currencyType?: string;
+  cash?: string;
 
   @Prop()
-  titleId?: string;
+  titleId?: string; // 칭호
 }
 
 export const EventRewardSchema = SchemaFactory.createForClass(EventReward);
