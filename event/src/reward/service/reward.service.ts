@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { EventRepository } from '../../event/repository/event.repository';
 import { RewardConditionStrategy } from './strategy/reward-condition.strategy';
 import { SuccessRs } from '../../common/rqrs/success.rs';
@@ -26,6 +31,10 @@ export class RewardService {
 
     if (!event) {
       throw new NotFoundException('이벤트를 찾을 수 없습니다.');
+    }
+
+    if (await this.rewardLogRepository.successLogCheck(eventId, userId)) {
+      throw new BadRequestException('이미 진행한 이벤트입니다.');
     }
 
     for (const condition of event.conditions) {

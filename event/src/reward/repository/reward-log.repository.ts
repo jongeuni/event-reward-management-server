@@ -25,4 +25,12 @@ export class RewardLogRepository {
       isSuccess,
     });
   }
+
+  async successLogCheck(eventId: string, userId: string) {
+    return this.rewordLogModel.exists({
+      eventId: toObjectId(eventId),
+      userId: toObjectId(userId),
+      isSuccess: true,
+    });
+  }
 }

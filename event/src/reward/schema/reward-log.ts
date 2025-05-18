@@ -1,9 +1,10 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 import { EventRewardType } from '../../event/schema/event.type';
 
 export type RewardLogDocument = HydratedDocument<RewardLog>;
 
+@Schema()
 export class RewardLog {
   @Prop({ required: true, type: mongoose.Types.ObjectId })
   eventId: ObjectId;
