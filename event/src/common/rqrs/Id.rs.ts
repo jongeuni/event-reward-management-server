@@ -1,4 +1,4 @@
 
-export interface IdRs {
-  id: string;
+export class IdRs {
+  readonly id: string;
 }

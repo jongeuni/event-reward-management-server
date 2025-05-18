@@ -4,6 +4,7 @@ import {
   CurrentUser,
 } from '../common/user/current-user';
 import { RewardService } from './service/reward.service';
+import { SuccessRs } from '../common/rqrs/success.rs';
 
 @Controller()
 export class RewardController {
@@ -13,12 +14,8 @@ export class RewardController {
   async requestRewords(
     @CurrentUser() user: CurrentUserType,
     @Param('eventId') eventId: string,
-  ) {
-    await this.rewardService.rewardCheck(user.userId, eventId);
-    // event find
-    // event 조건 타입 확인
-    // 해당하는 조건 확인
-    // 조건에 만족하면 이벤트 지급, 만약 만족하지 못한다면 ...
+  ): Promise<SuccessRs> {
+    return await this.rewardService.rewardCheck(user.userId, eventId);
   }
 
   @Get('admin/event/rewords') // 보상 요청 조회 API
