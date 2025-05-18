@@ -20,13 +20,12 @@ export class EventController {
     return this.eventService.createEvent(rq, user.userId);
   }
 
-  @Get('/admin/event-list')
-  async readAllEventList(): Promise<AllEventItemRs[]> {
-    return this.eventService.readAllEventList();
+  @Get('/event-list')
+  async readAllEventList(
+    @CurrentUser() user: CurrentUserType,
+  ): Promise<AllEventItemRs[]> {
+    return this.eventService.readAllEventList(user.role);
   }
-
-  @Get('event-list')
-  async readEventList(@CurrentUser() user: CurrentUserType) {}
 
   @Patch('admin/event/reword')
   async updateRewords(@Body() rq: any) {}

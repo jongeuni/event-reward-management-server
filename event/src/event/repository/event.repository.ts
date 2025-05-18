@@ -19,6 +19,10 @@ export class EventRepository {
     return this.eventModel.find().lean().exec();
   }
 
+  async findPublic(): Promise<Event[]> {
+    return this.eventModel.find({ isPrivate: false }).lean().exec();
+  }
+
   async findAllByUserId(userId: string): Promise<Event[]> {
     return this.eventModel
       .find({ userId: toObjectId(userId) })

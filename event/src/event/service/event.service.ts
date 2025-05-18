@@ -10,6 +10,7 @@ import {
 } from '../rqrs/all-event-item.rs';
 import { EventCondition } from '../schema/event-condition';
 import { EventReward } from '../schema/event-reword';
+import { UserRole } from '../../common/user/current-user';
 
 @Injectable({ scope: Scope.REQUEST })
 export class EventService {
@@ -25,8 +26,12 @@ export class EventService {
     };
   }
 
-  async readAllEventList(): Promise<AllEventItemRs[]> {
-    const events = await this.eventRepository.findAll();
+  async readAllEventList(role: UserRole): Promise<AllEventItemRs[]> {
+    const events =
+      role == 'USER'
+        ? await this.eventRepository.findPublic()
+        : await this.eventRepository.findAll();
+
     return events.map((event) => {
       return new AllEventItemRs(
         event._id.toString(),
