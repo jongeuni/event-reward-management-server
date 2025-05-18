@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RewardLog, RewordLogSchema } from '../schema/reward-log';
-import { RewordLogRepository } from './reward-log.repository';
+import { RewardLogRepository } from './reward-log.repository';
 
 @Module({
   imports: [
@@ -9,7 +9,7 @@ import { RewordLogRepository } from './reward-log.repository';
       { name: RewardLog.name, schema: RewordLogSchema },
     ]),
   ],
-  providers: [RewordLogRepository],
-  exports: [RewordLogRepository],
+  providers: [RewardLogRepository],
+  exports: [RewardLogRepository],
 })
-export class RewordLogRepositoryModule {}
+export class RewardLogRepositoryModule {}

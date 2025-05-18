@@ -1,3 +1,11 @@
-export type CashLogType = 'CHARGE' | 'USE' | 'BONUS';
+export enum CashLogType {
+  CHARGE = 'CHARGE',
+  USE = 'USE',
+  BONUS = 'BONUS'
+}
 
-export type CashSourceType = 'ADMIN' | 'EVENT' | 'USER';
+export enum CashSourceType {
+  ADMIN = 'ADMIN',
+  EVENT = 'EVENT',
+  USER = 'USER'
+}

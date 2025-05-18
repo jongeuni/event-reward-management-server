@@ -19,7 +19,7 @@ export class EventReward {
   itemId?: Types.ObjectId;
 
   @Prop()
-  cash?: string;
+  cash?: number;
 
   @Prop()
   titleId?: Types.ObjectId; // 칭호
