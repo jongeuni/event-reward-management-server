@@ -1,7 +1,7 @@
 // event/schemas/event-reward.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { EventRewardType } from './event.type';
-import { EventRewordDto } from '../dto/event-create.dto';
+import { EventRewardDto } from '../dto/event-create.dto';
 import { Types } from 'mongoose';
 import { toObjectId } from '../../common/util/object-id';
 
@@ -24,7 +24,7 @@ export class EventReward {
   @Prop()
   titleId?: Types.ObjectId; // 칭호
 
-  constructor(dto: EventRewordDto) {
+  constructor(dto: EventRewardDto) {
     this.type = dto.type;
     this.itemId = dto.itemId == undefined ? undefined : toObjectId(dto.itemId);
     this.cash = dto.cash;

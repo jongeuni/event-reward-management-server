@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { EventService } from './service/event.service';
 import { EventCreateRq } from './rqrs/event-create.rq';
 import { IdRs } from '../common/rqrs/Id.rs';
@@ -7,6 +7,7 @@ import {
   CurrentUser,
   CurrentUser as CurrentUserType,
 } from '../common/user/current-user';
+import { AddRewardRq } from './rqrs/add-reward.rq';
 
 @Controller()
 export class EventController {
@@ -27,6 +28,11 @@ export class EventController {
     return this.eventService.readAllEventList(user.role);
   }
 
-  @Patch('admin/event/reword')
-  async updateRewords(@Body() rq: any) {}
+  @Post('/admin/event/{:eventId}/reword')
+  async addRewords(
+    @Param('eventId') eventId: string,
+    @Body() rq: AddRewardRq[],
+  ) {
+    await this.eventService.addRewords(eventId, rq);
+  }
 }

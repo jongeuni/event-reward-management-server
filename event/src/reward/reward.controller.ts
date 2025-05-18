@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
 @Controller()
-export class RewordController {
+export class RewardController {
   @Post('/event/rewords') // 보상 요청 API
   async requestRewords(@Body() rq: any) {}
 

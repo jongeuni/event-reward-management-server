@@ -2,7 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { EventCondition, EventConditionSchema } from './event-condition';
-import { EventReward, EventRewardSchema } from './event-reword';
+import { EventReward, EventRewardSchema } from './event-reward';
 import { EventCreateDto } from '../dto/event-create.dto';
 
 @Schema({ timestamps: true })

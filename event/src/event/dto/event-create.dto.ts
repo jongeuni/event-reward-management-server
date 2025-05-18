@@ -13,7 +13,7 @@ export class EventCreateDto {
     public readonly endedAt: Date | null,
     public readonly isPrivate: boolean,
     public readonly conditions: EventConditionDto[],
-    public readonly rewords: EventRewordDto[],
+    public readonly rewords: EventRewardDto[],
   ) {}
 
   static from(rq: EventCreateRq): EventCreateDto {
@@ -27,7 +27,7 @@ export class EventCreateDto {
         return EventConditionDto.from(condition);
       }),
       rq.rewords.map((reword) => {
-        return EventRewordDto.from(reword);
+        return EventRewardDto.from(reword);
       }),
     );
   }
@@ -55,7 +55,7 @@ export class EventConditionDto {
 }
 
 // 보상
-export class EventRewordDto {
+export class EventRewardDto {
   constructor(
     public readonly type: EventRewardType,
     public readonly itemId?: string,
@@ -63,7 +63,7 @@ export class EventRewordDto {
     public readonly titleId?: string,
   ) {}
 
-  static from(rq: EventRewordRq): EventRewordDto {
-    return new EventRewordDto(rq.type, rq.itemId, rq.cash, rq.titleId);
+  static from(rq: EventRewordRq): EventRewardDto {
+    return new EventRewardDto(rq.type, rq.itemId, rq.cash, rq.titleId);
   }
 }

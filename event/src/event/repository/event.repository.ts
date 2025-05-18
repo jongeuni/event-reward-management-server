@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Event, EventDocument } from '../schema/event';
-import { EventCreateDto } from '../dto/event-create.dto';
+import { EventCreateDto, EventRewardDto } from '../dto/event-create.dto';
 import { toObjectId } from '../../common/util/object-id';
+import { EventReward } from '../schema/event-reward';
 
 @Injectable()
 export class EventRepository {
@@ -23,10 +24,19 @@ export class EventRepository {
     return this.eventModel.find({ isPrivate: false }).lean().exec();
   }
 
-  async findAllByUserId(userId: string): Promise<Event[]> {
-    return this.eventModel
-      .find({ userId: toObjectId(userId) })
-      .lean()
-      .exec();
+  async addRewardByEventId(eventId: string, dtos: EventRewardDto[]) {
+    const rewards = dtos.map((dto) => {
+      return new EventReward(dto);
+    });
+    await this.eventModel.updateOne(
+      { _id: toObjectId(eventId) },
+      {
+        $push: {
+          rewards: {
+            $each: rewards,
+          },
+        },
+      },
+    );
   }
 }

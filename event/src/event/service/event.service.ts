@@ -9,8 +9,9 @@ import {
   EventRewordRs,
 } from '../rqrs/all-event-item.rs';
 import { EventCondition } from '../schema/event-condition';
-import { EventReward } from '../schema/event-reword';
+import { EventReward } from '../schema/event-reward';
 import { UserRole } from '../../common/user/current-user';
+import { AddRewardRq } from '../rqrs/add-reward.rq';
 
 @Injectable({ scope: Scope.REQUEST })
 export class EventService {
@@ -67,5 +68,9 @@ export class EventService {
         reward.titleId?.toString(),
       );
     });
+  }
+
+  async addRewords(eventId: string, rewords: AddRewardRq[]) {
+    await this.eventRepository.addRewardByEventId(eventId, rewords);
   }
 }

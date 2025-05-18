@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RewordLog, RewordLogSchema } from './reword-log';
-import { RewordLogRepository } from './reword-log.respository';
+import { RewardLog, RewordLogSchema } from './reward-log';
+import { RewordLogRepository } from './reward-log.repository';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: RewordLog.name, schema: RewordLogSchema },
+      { name: RewardLog.name, schema: RewordLogSchema },
     ]),
   ],
   providers: [RewordLogRepository],

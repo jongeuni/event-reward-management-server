@@ -2,9 +2,9 @@ import { Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 import { EventRewardType } from '../event/schema/event.type';
 
-export type RewordLogDocument = HydratedDocument<RewordLog>;
+export type RewordLogDocument = HydratedDocument<RewardLog>;
 
-export class RewordLog {
+export class RewardLog {
   @Prop({ required: true, type: mongoose.Types.ObjectId })
   eventId: ObjectId;
 
@@ -18,4 +18,4 @@ export class RewordLog {
   isSuccess: boolean;
 }
 
-export const RewordLogSchema = SchemaFactory.createForClass(RewordLog);
+export const RewordLogSchema = SchemaFactory.createForClass(RewardLog);
