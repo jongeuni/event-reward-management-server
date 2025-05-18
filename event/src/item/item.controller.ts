@@ -14,9 +14,9 @@ export class ItemController {
   @Post('/user/item/{:itemId}')
   async itemPurchase(
     @CurrentUser() user: CurrentUserType,
-    @Param() itemId: string,
+    @Param('itemId') itemId: string,
   ): Promise<void> {
-    // return this.rewardService.rewardCheck(user.userId, eventId);
+    await this.itemService.buyItem(user.userId, itemId);
   }
 
   @Post('/item')

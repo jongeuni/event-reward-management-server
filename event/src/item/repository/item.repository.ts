@@ -11,6 +11,10 @@ export class ItemRepository {
     @InjectModel(Item.name) readonly itemModel: Model<ItemDocument>,
   ) {}
 
+  async findById(itemId: string): Promise<Item | null> {
+    return this.itemModel.findById(toObjectId(itemId)).lean().exec();
+  }
+
   async create(userId: string, dto: CreateItemDto): Promise<Item> {
     return this.itemModel.create({
       title: dto.title,
