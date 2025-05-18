@@ -14,4 +14,15 @@ export class EventRepository {
   async save(dto: EventCreateDto, userId: string): Promise<Event> {
     return this.eventModel.create(new Event(dto, toObjectId(userId)));
   }
+
+  async findAll(): Promise<Event[]> {
+    return this.eventModel.find().lean().exec();
+  }
+
+  async findAllByUserId(userId: string): Promise<Event[]> {
+    return this.eventModel
+      .find({ userId: toObjectId(userId) })
+      .lean()
+      .exec();
+  }
 }

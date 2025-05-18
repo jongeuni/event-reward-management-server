@@ -15,6 +15,9 @@ export class Event {
   @Prop()
   description?: string;
 
+  @Prop({ default: false })
+  isPrivate: boolean;
+
   @Prop({ type: Date })
   startedAt: Date;
 
@@ -37,6 +40,7 @@ export class Event {
     this.description = dto.description;
     this.startedAt = dto.startedAt;
     this.endedAt = dto.endedAt ?? undefined;
+    this.isPrivate = dto.isPrivate;
     this.conditions = dto.conditions.map(
       (condition) => new EventCondition(condition),
     );

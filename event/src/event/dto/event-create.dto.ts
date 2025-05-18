@@ -11,6 +11,7 @@ export class EventCreateDto {
     public readonly description: string,
     public readonly startedAt: Date,
     public readonly endedAt: Date | null,
+    public readonly isPrivate: boolean,
     public readonly conditions: EventConditionDto[],
     public readonly rewords: EventRewordDto[],
   ) {}
@@ -21,6 +22,7 @@ export class EventCreateDto {
       rq.description,
       rq.startedAt,
       rq.endedAt,
+      rq.isPrivate,
       rq.conditions.map((condition) => {
         return EventConditionDto.from(condition);
       }),
