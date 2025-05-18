@@ -55,4 +55,11 @@ export class RewardLogRepository {
 
     return this.rewordLogModel.find(query).exec();
   }
+
+  async findByUserId(userId: string): Promise<RewardRequestLog[]> {
+    return this.rewordLogModel
+      .find({ userId: toObjectId(userId) })
+      .lean()
+      .exec();
+  }
 }

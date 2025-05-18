@@ -120,4 +120,19 @@ export class RewardService {
       );
     });
   }
+
+  async readAllByUserId(userId: string) {
+    const rewardLogs: RewardRequestLog[] =
+      await this.rewardLogRepository.findByUserId(userId);
+
+    return rewardLogs.map((rewardLog) => {
+      return new EventRewardLogRs(
+        rewardLog.eventId.toString(),
+        rewardLog.userId.toString(),
+        rewardLog.type,
+        rewardLog.isSuccess,
+        rewardLog.createdAt,
+      );
+    });
+  }
 }

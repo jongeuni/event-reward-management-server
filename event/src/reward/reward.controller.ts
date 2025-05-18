@@ -27,5 +27,7 @@ export class RewardController {
   }
 
   @Get('/event/rewards') // 보상 요청 조회 API
-  async readRewards(@CurrentUser() user: CurrentUserType) {}
+  async readRewards(@CurrentUser() user: CurrentUserType) {
+    return this.rewardService.readAllByUserId(user.userId);
+  }
 }
