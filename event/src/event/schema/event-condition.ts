@@ -1,10 +1,6 @@
 // event/schemas/event-condition.schema.ts
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
-
-export type EventConditionType =
-  | 'consecutive_login'
-  | 'cash_spent'
-  | 'item_purchased';
+import { EventConditionType } from './event.type';
 
 export class EventCondition {
   @Prop({ required: true })
@@ -15,7 +11,7 @@ export class EventCondition {
   days?: number;
 
   @Prop()
-  amount?: number;
+  cash?: number;
 
   @Prop()
   itemId?: string;

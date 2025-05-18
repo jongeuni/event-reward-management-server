@@ -1,6 +1,6 @@
 // event/schemas/event.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, ObjectId } from 'mongoose';
 import { EventCondition, EventConditionSchema } from './event-condition';
 import { EventReward, EventRewardSchema } from './event-reword';
 
@@ -13,19 +13,19 @@ export class Event {
   description?: string;
 
   @Prop({ type: Date })
-  startAt: Date;
+  startedAt: Date;
 
   @Prop({ type: Date })
-  endAt: Date;
+  endedAt?: Date;
 
   @Prop({ type: [EventConditionSchema], required: true })
   conditions: EventCondition[];
 
-  @Prop({ type: EventRewardSchema, required: true })
-  reward: EventReward;
+  @Prop({ type: [EventRewardSchema], required: false })
+  rewards: EventReward[];
 
   @Prop()
-  createdBy?: string;
+  createdBy?: ObjectId;
 }
 
 export type EventDocument = HydratedDocument<Event>;

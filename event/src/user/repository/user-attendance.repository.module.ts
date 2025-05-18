@@ -4,6 +4,7 @@ import {
   UserAttendance,
   UserAttendanceSchema,
 } from '../schema/user-attendance';
+import { UserAttendanceRepository } from './user-attendance.repository';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import {
       { name: UserAttendance.name, schema: UserAttendanceSchema },
     ]),
   ],
-  controllers: [],
-  providers: [],
+  providers: [UserAttendanceRepository],
+  exports: [UserAttendanceRepository],
 })
 export class UserAttendanceRepositoryModule {}

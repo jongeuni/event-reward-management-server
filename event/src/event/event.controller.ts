@@ -5,11 +5,14 @@ import { EventService } from './service/event.service';
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
-  @Get('admin/event-list')
-  async readEventList(@Body() rq: any) {}
-
   @Post('admin/event')
   async createEvent(@Body() rq: any) {}
+
+  @Get('admin/event-list')
+  async readAllEventList(@Body() rq: any) {}
+
+  @Get('event-list')
+  async readEventList(@Body() rq: any) {}
 
   @Patch('admin/event/reword')
   async updateRewords(@Body() rq: any) {}
