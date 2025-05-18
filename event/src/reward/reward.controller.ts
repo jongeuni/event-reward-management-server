@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
@@ -15,12 +15,17 @@ export class RewardController {
     @CurrentUser() user: CurrentUserType,
     @Param('eventId') eventId: string,
   ): Promise<SuccessRs> {
-    return await this.rewardService.rewardCheck(user.userId, eventId);
+    return this.rewardService.rewardCheck(user.userId, eventId);
   }
 
-  @Get('admin/event/rewards') // 보상 요청 조회 API
-  async readRewardsRequest(@Body() rq: any) {}
+  @Get('/admin/event/rewards') // 보상 요청 조회 API
+  async readRewardsRequest(
+    @Query('startedAt') startedAt: Date,
+    @Query('endedAt') endedAt: Date,
+  ) {
+    return this.rewardService.readAllEventRewardLog(startedAt, endedAt);
+  }
 
-  @Get('event/rewards') // 보상 요청 조회 API
-  async readRewards(@Body() rq: any) {}
+  @Get('/event/rewards') // 보상 요청 조회 API
+  async readRewards(@CurrentUser() user: CurrentUserType) {}
 }

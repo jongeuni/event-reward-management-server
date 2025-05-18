@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RewardLog, RewardLogDocument } from '../schema/reward-log';
+import {
+  RewardRequestLog,
+  RewardRequestLogDocument,
+} from '../schema/reward-log';
 import { toObjectId } from '../../common/util/object-id';
 import { EventRewardType } from '../../event/schema/event.type';
 
 @Injectable()
 export class RewardLogRepository {
   constructor(
-    @InjectModel(RewardLog.name)
-    readonly rewordLogModel: Model<RewardLogDocument>,
+    @InjectModel(RewardRequestLog.name)
+    private readonly rewordLogModel: Model<RewardRequestLogDocument>,
   ) {}
 
   async createLog(
@@ -32,5 +35,24 @@ export class RewardLogRepository {
       userId: toObjectId(userId),
       isSuccess: true,
     });
+  }
+
+  async findByCreatedAt(
+    startedAt?: Date,
+    endedAt?: Date,
+  ): Promise<RewardRequestLog[]> {
+    const query: any = {};
+
+    if (startedAt || endedAt) {
+      query.createdAt = {};
+      if (startedAt) {
+        query.createdAt.$gte = startedAt;
+      }
+      if (endedAt) {
+        query.createdAt.$lte = endedAt;
+      }
+    }
+
+    return this.rewordLogModel.find(query).exec();
   }
 }

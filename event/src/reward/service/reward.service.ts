@@ -14,6 +14,8 @@ import {
 import { EventReward } from '../../event/schema/event-reward';
 import { RewardLogRepository } from '../repository/reward-log.repository';
 import { WalletRepository } from '../../user-wallet/rqrs/repository/wallet.repository';
+import { RewardRequestLog } from '../schema/reward-log';
+import { EventRewardLogRs } from '../rqrs/event-reward-log.rs';
 
 @Injectable()
 export class RewardService {
@@ -64,13 +66,13 @@ export class RewardService {
 
     // 보상 지급 로직
     event.rewards.forEach((reward) => {
-      this.reward(userId, eventId, reward);
+      this.rewardPayment(userId, eventId, reward);
     });
 
     return new SuccessRs();
   }
 
-  async reward(userId: string, eventId: string, reward: EventReward) {
+  async rewardPayment(userId: string, eventId: string, reward: EventReward) {
     switch (reward.type) {
       case EventRewardType.ITEM:
         // itemId로 아이템 찾아오기
@@ -99,5 +101,23 @@ export class RewardService {
       reward.type,
       true,
     );
+  }
+
+  async readAllEventRewardLog(
+    startedAt?: Date,
+    endedAt?: Date,
+  ): Promise<EventRewardLogRs[]> {
+    const rewardLogs: RewardRequestLog[] =
+      await this.rewardLogRepository.findByCreatedAt(startedAt, endedAt);
+
+    return rewardLogs.map((rewardLog) => {
+      return new EventRewardLogRs(
+        rewardLog.eventId.toString(),
+        rewardLog.userId.toString(),
+        rewardLog.type,
+        rewardLog.isSuccess,
+        rewardLog.createdAt,
+      );
+    });
   }
 }
