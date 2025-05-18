@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserAttendanceModule } from './user/user-attendance.module';
 import { EventModule } from './event/event.module';
 import { WalletModule } from './user-wallet/wallet.module';
+import { RewordModule } from './reword/reword.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { WalletModule } from './user-wallet/wallet.module';
     UserAttendanceModule,
     EventModule,
     WalletModule,
+    RewordModule,
   ],
   controllers: [AppController],
   providers: [AppService],
