@@ -5,7 +5,7 @@ import {
 } from './reward-condition.strategy.impl';
 import { Module } from '@nestjs/common';
 import { RewardConditionStrategy } from './reward-condition.strategy';
-import { UserAttendanceRepositoryModule } from '../../../user/repository/user-attendance.repository.module';
+import { UserAttendanceRepositoryModule } from '../../../user-attendance/repository/user-attendance.repository.module';
 
 @Module({
   imports: [UserAttendanceRepositoryModule],

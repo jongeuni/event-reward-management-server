@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EventConditionType } from '../../../event/schema/event.type';
 import { RewardConditionStrategy } from './reward-condition.strategy';
-import { UserAttendanceRepository } from '../../../user/repository/user-attendance.repository';
+import { UserAttendanceRepository } from '../../../user-attendance/repository/user-attendance.repository';
 
 @Injectable()
 export class ConsecutiveLoginStrategy implements RewardConditionStrategy {
