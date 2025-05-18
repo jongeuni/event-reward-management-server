@@ -9,7 +9,7 @@ export class EventService {
   constructor(private readonly eventRepository: EventRepository) {}
 
   async createEvent(rq: EventCreateRq): Promise<IdRs> {
-    const userId: string = '';
+    const userId: string = '66679e9e54711517579556f3';
     const event = await this.eventRepository.save(
       EventCreateDto.from(rq),
       userId,

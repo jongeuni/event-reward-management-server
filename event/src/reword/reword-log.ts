@@ -1,6 +1,6 @@
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
-import { EventRewardType } from '../event/schema/event-reword';
 import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
+import { EventRewardType } from '../event/schema/event.type';
 
 export type RewordLogDocument = HydratedDocument<RewordLog>;
 

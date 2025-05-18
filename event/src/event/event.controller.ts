@@ -7,7 +7,7 @@ import { IdRs } from '../common/rqrs/Id.rs';
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
-  @Post('admin/event')
+  @Post('/admin/event')
   async createEvent(@Body() rq: EventCreateRq): Promise<IdRs> {
     return this.eventService.createEvent(rq);
   }

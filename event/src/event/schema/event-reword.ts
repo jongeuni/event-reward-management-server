@@ -1,12 +1,13 @@
 // event/schemas/event-reward.schema.ts
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { EventRewardType } from './event.type';
 import { EventRewordDto } from '../dto/event-create.dto';
 import { Types } from 'mongoose';
 import { toObjectId } from '../../common/util/object-id';
 
+@Schema({ _id: false })
 export class EventReward {
-  @Prop({ required: true })
+  @Prop({ required: true, enum: EventRewardType })
   type: EventRewardType;
 
   // 공통 속성

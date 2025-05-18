@@ -1,11 +1,11 @@
-export enum EventType {
-  LOGIN = 'LOGIN',
+export enum EventConditionType {
+  LOGIN = 'CONTINUOUS_LOGIN',
   USE_CASH = 'USE_CASH',
+  ITEM_PURCHASE = 'ITEM_PURCHASE'
 }
 
-export type EventConditionType =
-  | 'consecutive_login'
-  | 'cash_spent'
-  | 'item_purchased';
-
-export type EventRewardType = 'item' | 'cash' | 'title';
+export enum EventRewardType {
+  ITEM = 'ITEM',
+  CASH = 'CASH',
+  TITLE = 'TITLE'
+}
