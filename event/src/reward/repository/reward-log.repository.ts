@@ -15,7 +15,7 @@ export class RewardLogRepository {
   async createLog(
     eventId: string,
     userId: string,
-    rewardType: EventRewardType | null,
+    rewardType: EventRewardType,
     isSuccess: boolean,
   ) {
     await this.rewordLogModel.create({

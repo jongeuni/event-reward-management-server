@@ -20,6 +20,7 @@ export class RewardService {
     private readonly strategies: RewardConditionStrategy[],
   ) {}
 
+  // TODO 트랜잭셔널, 동시성 제어
   async rewardCheck(userId: string, eventId: string): Promise<SuccessRs> {
     const event = await this.eventRepository.findById(eventId);
 
@@ -38,7 +39,12 @@ export class RewardService {
       const checked = await strategy.check(userId, condition);
 
       if (!checked) {
-        await this.rewardLogRepository.createLog(eventId, userId, null, false);
+        await this.rewardLogRepository.createLog(
+          eventId,
+          userId,
+          EventRewardType.NONE,
+          false,
+        );
 
         return new SuccessRs(
           false,

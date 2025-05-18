@@ -33,6 +33,6 @@ export class EventController {
     @Param('eventId') eventId: string,
     @Body() rq: AddRewardRq[],
   ) {
-    await this.eventService.addRewords(eventId, rq);
+    await this.eventService.addRewards(eventId, rq);
   }
 }

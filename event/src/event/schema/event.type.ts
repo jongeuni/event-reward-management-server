@@ -20,5 +20,6 @@ export function getEventConditionMean(type: EventConditionType): string {
 export enum EventRewardType {
   ITEM = 'ITEM',
   CASH = 'CASH',
-  TITLE = 'TITLE'
+  TITLE = 'TITLE',
+  NONE = 'NONE'
 }

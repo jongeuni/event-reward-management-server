@@ -12,7 +12,7 @@ export class RewardLog {
   userId: ObjectId;
 
   @Prop({ enum: EventRewardType })
-  type: EventRewardType | null;
+  type: EventRewardType;
 
   @Prop()
   isSuccess: boolean;

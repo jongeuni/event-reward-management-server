@@ -70,7 +70,7 @@ export class EventService {
     });
   }
 
-  async addRewords(eventId: string, rewords: AddRewardRq[]) {
-    await this.eventRepository.addRewardByEventId(eventId, rewords);
+  async addRewards(eventId: string, rewards: AddRewardRq[]) {
+    await this.eventRepository.addRewardByEventId(eventId, rewards);
   }
 }
