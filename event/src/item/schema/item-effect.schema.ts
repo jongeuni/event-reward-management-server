@@ -1,6 +1,6 @@
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
 
-export type EffectType = 'power';
+export type EffectType = 'POWER';
 
 export class ItemEffect {
   @Prop({ required: true })

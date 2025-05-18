@@ -1,6 +1,6 @@
 import { EffectType } from '../schema/item-effect.schema';
 
-export class ItemCreateRq {
+export class CreateItemDto {
   constructor(
     public readonly title: string,
     public readonly description: string,

@@ -5,6 +5,7 @@ import {
 } from '../common/user/current-user';
 import { ItemService } from './service/item.service';
 import { ItemCreateRq } from './rqrs/item-create.rq';
+import { IdRs } from '../common/rqrs/Id.rs';
 
 @Controller()
 export class ItemController {
@@ -22,7 +23,7 @@ export class ItemController {
   async createItem(
     @CurrentUser() user: CurrentUserType,
     @Body() rq: ItemCreateRq,
-  ): Promise<void> {
-    // return this.rewardService.rewardCheck(user.userId, eventId);
+  ): Promise<IdRs> {
+    return this.itemService.createItem(user.userId, rq);
   }
 }
