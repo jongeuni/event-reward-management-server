@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 import { EventService } from './service/event.service';
 
 @Controller()
@@ -10,4 +10,7 @@ export class EventController {
 
   @Post('/event')
   async createEvent(@Body() rq: any) {}
+
+  @Patch('/event/reword')
+  async updateRewords(@Body() rq: any) {}
 }
