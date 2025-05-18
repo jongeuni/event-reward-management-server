@@ -1,11 +1,14 @@
 // event/schemas/event.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, ObjectId } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { EventCondition, EventConditionSchema } from './event-condition';
 import { EventReward, EventRewardSchema } from './event-reword';
+import { EventCreateDto } from '../dto/event-create.dto';
 
 @Schema({ timestamps: true })
 export class Event {
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   title: string;
 
@@ -25,7 +28,21 @@ export class Event {
   rewards: EventReward[];
 
   @Prop()
-  createdBy?: ObjectId;
+  createdBy?: Types.ObjectId;
+
+  // rq.itemId == undefined ? undefined : toObjectId(rq.itemId),
+
+  constructor(dto: EventCreateDto, userId: Types.ObjectId) {
+    this.title = dto.title;
+    this.description = dto.description;
+    this.startedAt = dto.startedAt;
+    this.endedAt = dto.endedAt ?? undefined;
+    this.conditions = dto.conditions.map(
+      (condition) => new EventCondition(condition),
+    );
+    this.rewards = dto.rewords.map((reword) => new EventReward(reword));
+    this.createdBy = userId;
+  }
 }
 
 export type EventDocument = HydratedDocument<Event>;
