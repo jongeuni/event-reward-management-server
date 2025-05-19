@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model, Types } from 'mongoose';
-import { UserWallet, UserWalletDocument } from '../../schema/wallet.schema';
-import { CashLog } from '../../schema/cash-log.schema';
-import { CashLogType, CashSourceType } from '../../schema/cash-log.type';
-import { toObjectId } from '../../../common/util/object-id';
+import { UserWallet, UserWalletDocument } from '../schema/wallet.schema';
+import { CashLog } from '../../cash-log/cash-log.schema';
+import { CashLogType, CashSourceType } from '../../cash-log/cash-log.type';
+import { toObjectId } from '../../common/util/object-id';
 
 @Injectable()
 export class WalletRepository {
@@ -64,7 +64,7 @@ export class WalletRepository {
     });
   }
 
-  async minusCash(
+  private async minusCash(
     userId: string,
     amount: number,
     session: ClientSession,

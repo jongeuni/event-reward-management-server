@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserWallet, UserWalletSchema } from '../../schema/wallet.schema';
+import { UserWallet, UserWalletSchema } from '../schema/wallet.schema';
 import { WalletRepository } from './wallet.repository';
-import { CashLog, CashLogSchema } from '../../schema/cash-log.schema';
+import { CashLog, CashLogSchema } from '../../cash-log/cash-log.schema';
 
 @Module({
   imports: [

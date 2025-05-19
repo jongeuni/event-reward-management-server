@@ -13,7 +13,7 @@ import {
 } from '../../event/schema/event.type';
 import { EventReward } from '../../event/schema/event-reward';
 import { RewardLogRepository } from '../repository/reward-log.repository';
-import { WalletRepository } from '../../user-wallet/rqrs/repository/wallet.repository';
+import { WalletRepository } from '../../user-wallet/repository/wallet.repository';
 import { RewardRequestLog } from '../schema/reward-log';
 import { EventRewardLogRs } from '../rqrs/event-reward-log.rs';
 import { InventoryRepository } from '../../inventory/repository/inventory.repository';

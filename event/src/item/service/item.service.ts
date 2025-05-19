@@ -7,7 +7,7 @@ import { ItemRepository } from '../repository/item.repository';
 import { ItemCreateRq } from '../rqrs/item-create.rq';
 import { Item } from '../schema/item.schema';
 import { IdRs } from '../../common/rqrs/Id.rs';
-import { WalletRepository } from '../../user-wallet/rqrs/repository/wallet.repository';
+import { WalletRepository } from '../../user-wallet/repository/wallet.repository';
 import { InventoryRepository } from '../../inventory/repository/inventory.repository';
 import { UserWallet } from '../../user-wallet/schema/wallet.schema';
 import { ClientSession, Connection } from 'mongoose';

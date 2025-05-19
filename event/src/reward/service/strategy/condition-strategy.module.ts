@@ -1,6 +1,6 @@
 import {
   AttendanceStrategy,
-  CashStrategy,
+  CashUseStrategy,
   ItemPurchasedStrategy,
 } from './event-condition.impl';
 import { Module } from '@nestjs/common';
@@ -11,16 +11,16 @@ import { UserAttendanceRepositoryModule } from '../../../user-attendance/reposit
   imports: [UserAttendanceRepositoryModule],
   providers: [
     AttendanceStrategy,
-    CashStrategy,
+    CashUseStrategy,
     ItemPurchasedStrategy,
     {
       provide: 'REWARD_STRATEGIES',
       useFactory: (
         login: AttendanceStrategy,
-        cash: CashStrategy,
+        cash: CashUseStrategy,
         item: ItemPurchasedStrategy,
       ): EventConditionStrategy[] => [login, cash, item],
-      inject: [AttendanceStrategy, CashStrategy, ItemPurchasedStrategy],
+      inject: [AttendanceStrategy, CashUseStrategy, ItemPurchasedStrategy],
     },
   ],
   exports: ['REWARD_STRATEGIES'],

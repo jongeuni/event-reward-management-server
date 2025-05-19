@@ -5,7 +5,9 @@ import { UserAttendanceRepository } from '../../../user-attendance/repository/us
 
 @Injectable()
 export class AttendanceStrategy implements EventConditionStrategy {
-  constructor(private readonly userRepository: UserAttendanceRepository) {}
+  constructor(
+    private readonly attendanceRepository: UserAttendanceRepository,
+  ) {}
 
   supports(type: string): boolean {
     return type === EventConditionType.MONTH_ATTENDANCE;
@@ -20,7 +22,9 @@ export class AttendanceStrategy implements EventConditionStrategy {
 }
 
 @Injectable()
-export class CashStrategy implements EventConditionStrategy {
+export class CashUseStrategy implements EventConditionStrategy {
+  // constructor(private readonly attendanceRepository: CashLogRepository) {}
+
   supports(type: string): boolean {
     return type === EventConditionType.USE_CASH;
   }
