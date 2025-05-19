@@ -6,6 +6,7 @@ import {
   ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -43,9 +44,11 @@ export class RewardGatewayController {
     @Param('eventId') eventId: string,
     @CurrentUserHeader() headers: RequestHeader,
   ) {
+    console.log(headers.role + headers.user_id);
     const response = await firstValueFrom(
       this.httpService.post<SuccessRs>(
-        `${EVENT_SERVER}/event/${eventId}/rewards`,
+        `${EVENT_SERVER}/events/${eventId}/rewards`,
+        {},
         { headers },
       ),
     );
@@ -54,7 +57,7 @@ export class RewardGatewayController {
 
   @ApiOperation({
     summary: '보상 요청 조회 API',
-    description: '사용자 본인의 이벤트 보상 요청 목록을 조회합니다.',
+    description: '로그인한 사용자의 이벤트 보상 요청 목록을 조회합니다.',
   })
   @ApiResponse({ type: [ReadRewardRequestItemRs] })
   @UseGuards(JwtAuthGuard)
@@ -62,7 +65,7 @@ export class RewardGatewayController {
   async readRewardRequestList(@CurrentUserHeader() headers: RequestHeader) {
     const response = await firstValueFrom(
       this.httpService.get<ReadRewardRequestItemRs[]>(
-        `${EVENT_SERVER}/event/rewards`,
+        `${EVENT_SERVER}/events/rewards`,
         { headers },
       ),
     );
@@ -73,8 +76,10 @@ export class RewardGatewayController {
     summary: '[어드민] 전체 보상 요청 조회 API',
     description: '전체 보상 요청 목록을 조회합니다.',
   })
+  @ApiQuery({ name: 'startedAt', required: false, type: String })
+  @ApiQuery({ name: 'endedAt', required: false, type: String })
   @ApiResponse({ type: [ReadRewardRequestItemRs] })
-  @AuthRoleGuard(UserRole.ADMIN)
+  @AuthRoleGuard(UserRole.ADMIN, UserRole.AUDITOR, UserRole.OPERATOR)
   @Get('/admin/events/rewards')
   async readAllRewardRequestList(
     @CurrentUserHeader() headers: RequestHeader,
@@ -88,7 +93,7 @@ export class RewardGatewayController {
 
     const response = await firstValueFrom(
       this.httpService.get<ReadRewardRequestItemRs[]>(
-        `${EVENT_SERVER}/admin/event/rewards`,
+        `${EVENT_SERVER}/admin/events/rewards`,
         { headers, params },
       ),
     );

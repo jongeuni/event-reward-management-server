@@ -35,15 +35,11 @@ export class WalletGatewayController {
     @Body() rq: ChargeCashRq,
     @CurrentUserHeader() headers: RequestHeader,
   ) {
-    console.log(headers['role'] + '머야ㅑㅑ');
-    console.log('2');
     const response = await firstValueFrom(
       this.httpService.post<ChargeCashRs>(`${EVENT_SERVER}/wallet/charge`, rq, {
         headers,
       }),
     );
-    console.log('1');
-    console.log(response);
     return response.data;
   }
 }

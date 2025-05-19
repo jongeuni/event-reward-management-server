@@ -8,7 +8,7 @@ export class SignUpRs {
   @ApiProperty()
   readonly email: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: UserRole })
   readonly role: UserRole;
 
   @ApiProperty()

@@ -50,7 +50,7 @@ export class EventGatewayController {
     description: '이벤트를 생성합니다.',
   })
   @ApiResponse({ type: IdRs })
-  @AuthRoleGuard(UserRole.ADMIN)
+  @AuthRoleGuard(UserRole.ADMIN, UserRole.OPERATOR)
   @Post('/admin/events')
   async createEvent(
     @Body() rq: CreateEventRq,
@@ -68,11 +68,11 @@ export class EventGatewayController {
     summary: '[어드민] 이벤트에 보상 추가 API',
     description: '이벤트에 보상을 추가합니다.',
   })
-  @UseGuards(JwtAuthGuard)
+  @AuthRoleGuard(UserRole.ADMIN, UserRole.OPERATOR)
   @Post('/admin/events/{:eventId}/rewords')
   async addReword(
     @Param('eventId') eventId: string,
-    @Body() rq: AddRewardRq,
+    @Body() rq: AddRewardRq[],
     @CurrentUserHeader() headers: RequestHeader,
   ) {
     await firstValueFrom(

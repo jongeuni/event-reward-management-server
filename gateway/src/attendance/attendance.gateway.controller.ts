@@ -1,7 +1,7 @@
 import { Controller, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
   CurrentUserHeader,
@@ -9,9 +9,10 @@ import {
 } from '../common/auth/auth.current-user-header';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Attendance Controller - 유저 출석')
 @Controller('/v1')
-export class WalletGatewayController {
+export class AttendanceGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
   @ApiOperation({
@@ -22,9 +23,13 @@ export class WalletGatewayController {
   @Post('/attendances')
   async attendanceCheck(@CurrentUserHeader() headers: RequestHeader) {
     await firstValueFrom(
-      this.httpService.post(`${EVENT_SERVER}/attendances`, {
-        headers,
-      }),
+      this.httpService.post(
+        `${EVENT_SERVER}/attendances`,
+        {},
+        {
+          headers,
+        },
+      ),
     );
   }
 }

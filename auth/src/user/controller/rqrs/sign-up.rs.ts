@@ -7,7 +7,7 @@ import { UserRole } from '../../user-role';
  * @property password     - 비밀번호
  */
 export interface SignUpRs {
-  nickname: string;
+  name: string;
 
   email: string;
 

@@ -11,11 +11,12 @@ import { IdRs } from '../common/rqrs/Id.rs';
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
-  @Post('/item/{:itemId}')
+  @Post('/items/:itemId')
   async itemPurchase(
     @CurrentUser() user: CurrentUserType,
     @Param('itemId') itemId: string,
   ): Promise<void> {
+    console.log('hii');
     await this.itemService.buyItem(user.userId, itemId);
   }
 

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SignInRq {
-  @ApiProperty()
+  @ApiProperty({ default: 'admin01' })
   email: string;
-  @ApiProperty()
+  @ApiProperty({ default: 'admin01' })
   password: string;
 }

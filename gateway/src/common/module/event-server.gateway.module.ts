@@ -5,6 +5,7 @@ import { WalletGatewayController } from '../../wallet/wallet.gateway.controller'
 import { ItemGatewayController } from '../../item/item.gateway.controller';
 import { EventGatewayController } from '../../event/event.gateway.controller';
 import { HttpModule } from '@nestjs/axios';
+import { AttendanceGatewayController } from '../../attendance/attendance.gateway.controller';
 
 @Module({
   imports: [HttpModule],
@@ -14,6 +15,7 @@ import { HttpModule } from '@nestjs/axios';
     RewardGatewayController,
     ItemGatewayController,
     EventGatewayController,
+    AttendanceGatewayController,
   ],
 })
 export class EventServerGatewayModule {}

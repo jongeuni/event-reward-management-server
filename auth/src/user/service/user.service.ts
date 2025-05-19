@@ -26,13 +26,13 @@ export class UserService {
   async signUp(rq: SignUpRq): Promise<SignUpRs> {
     const user: User = await this.accountRepository.create({
       email: rq.email,
-      name: rq.nickname,
+      name: rq.name,
       password: await bcrypt.hash(rq.password, 10),
       role: 'USER',
     });
 
     return {
-      nickname: user.name,
+      name: user.name,
       email: user.email,
       role: user.role,
       ...(await this.jwtUtil.createJwtToken(
@@ -66,7 +66,7 @@ export class UserService {
   async createUser(rq: CreateUserRq) {
     const user: User = await this.accountRepository.create({
       email: rq.email,
-      name: rq.nickname,
+      name: rq.name,
       password: await bcrypt.hash(this.DEFAULT_PASSWORD, 10),
       role: rq.role,
     });

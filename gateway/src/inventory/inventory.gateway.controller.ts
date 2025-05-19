@@ -28,9 +28,10 @@ export class InventoryGatewayController {
   @ApiResponse({ type: SuccessRs })
   @Get()
   @UseGuards(JwtAuthGuard)
+  // 미개발
   async readInventory(@CurrentUserHeader() headers: RequestHeader) {
     await firstValueFrom(
-      this.httpService.post<SuccessRs>(`${EVENT_SERVER}/inventories`, {
+      this.httpService.get<SuccessRs>(`${EVENT_SERVER}/inventories`, {
         headers,
       }),
     );

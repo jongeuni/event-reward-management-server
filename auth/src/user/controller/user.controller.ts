@@ -18,7 +18,7 @@ export class UserController {
     return this.userService.signIn(rq);
   }
 
-  @Post('/admin/user') // 비밀번호는 디폴트로 다 동일하게 지정
+  @Post('/admin/users') // 비밀번호는 디폴트로 다 동일하게 지정
   async createUser(@Body() rq: CreateUserRq) {
     return this.userService.createUser(rq);
   }

@@ -32,16 +32,20 @@ export class ItemGatewayController {
   })
   @ApiBadRequestResponse({ description: '캐쉬 충전이 필요합니다.' })
   @ApiResponse({ type: SuccessRs })
-  @Post('/items/{:itemId}')
+  @Post('/items/:itemId')
   @UseGuards(JwtAuthGuard)
   async buyItem(
     @Param('itemId') itemId: string,
     @CurrentUserHeader() headers: RequestHeader,
   ) {
     await firstValueFrom(
-      this.httpService.post<SuccessRs>(`${EVENT_SERVER}/items/${itemId}`, {
-        headers,
-      }),
+      this.httpService.post<SuccessRs>(
+        `${EVENT_SERVER}/items/${itemId}`,
+        {},
+        {
+          headers,
+        },
+      ),
     );
   }
 
@@ -50,7 +54,7 @@ export class ItemGatewayController {
     description: '아이템을 생성(등록)합니다.',
   })
   @ApiResponse({ type: IdRs })
-  @AuthRoleGuard(UserRole.ADMIN)
+  @AuthRoleGuard(UserRole.ADMIN, UserRole.OPERATOR)
   @Post('/admin/items')
   async createItem(
     @Body() rq: CreateItemRq,

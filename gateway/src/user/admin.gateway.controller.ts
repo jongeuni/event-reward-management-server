@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { SignUpRs } from '../auth/rqrs/sign-up.rs';
-import { UserCreateRq } from '../auth/rqrs/user-create.rq';
+import { UserCreateRq } from './rqrs/user-create.rq';
 import { UserRole } from '../auth/rqrs/user-role';
 import { AuthRoleGuard } from '../common/auth/auth-role.guard';
 import {
@@ -10,7 +10,13 @@ import {
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
 import { AUTH_SERVER } from '../common/config/constants';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ChargeCashRs } from '../wallet/rqrs/charge-cash.rs';
 
 // FIXME
 @ApiBearerAuth('Access-Token')
@@ -19,8 +25,16 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class AdminGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
-  @Post('/users')
+  @ApiOperation({
+    summary: '사용자(관리자) 생성 API',
+    description:
+      '어드민이 사용자, 관리자를 생성합니다. password는 동일하게 생성됩니다. 공통 비밀번호: pw1234',
+  })
+  @ApiCreatedResponse({
+    type: ChargeCashRs,
+  })
   @AuthRoleGuard(UserRole.ADMIN)
+  @Post('/users')
   async userCreate(
     @Body() rq: UserCreateRq,
     @CurrentUserHeader() headers: RequestHeader,

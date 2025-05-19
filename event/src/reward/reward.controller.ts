@@ -26,7 +26,7 @@ export class RewardController {
     return this.rewardService.readAllEventRewardLog(startedAt, endedAt);
   }
 
-  @Get('/event/rewards') // 보상 요청 조회 API
+  @Get('/events/rewards') // 보상 요청 조회 API
   async readRewards(@CurrentUser() user: CurrentUserType) {
     return this.rewardService.readAllByUserId(user.userId);
   }

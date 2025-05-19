@@ -15,7 +15,7 @@ export class InventoryRepository {
     await this.inventoryModel
       .updateOne(
         { userId: toObjectId(userId) },
-        { $push: { itemId: toObjectId(itemId) } },
+        { $push: { itemId: { id: toObjectId(itemId) } } },
         { upsert: true },
       )
       .exec();
@@ -25,7 +25,7 @@ export class InventoryRepository {
     await this.inventoryModel
       .updateOne(
         { userId: toObjectId(userId) },
-        { $addToSet: { titleId: toObjectId(titleId) } },
+        { $addToSet: { titleId: { id: toObjectId(titleId) } } },
         { upsert: true },
       )
       .exec();
