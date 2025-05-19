@@ -1,28 +1,28 @@
 import {
+  AttendanceStrategy,
   CashStrategy,
-  ConsecutiveLoginStrategy,
   ItemPurchasedStrategy,
-} from './reward-condition.strategy.impl';
+} from './event-condition.impl';
 import { Module } from '@nestjs/common';
-import { RewardConditionStrategy } from './reward-condition.strategy';
+import { EventConditionStrategy } from './event-condition.strategy';
 import { UserAttendanceRepositoryModule } from '../../../user-attendance/repository/user-attendance.repository.module';
 
 @Module({
   imports: [UserAttendanceRepositoryModule],
   providers: [
-    ConsecutiveLoginStrategy,
+    AttendanceStrategy,
     CashStrategy,
     ItemPurchasedStrategy,
     {
       provide: 'REWARD_STRATEGIES',
       useFactory: (
-        login: ConsecutiveLoginStrategy,
+        login: AttendanceStrategy,
         cash: CashStrategy,
         item: ItemPurchasedStrategy,
-      ): RewardConditionStrategy[] => [login, cash, item],
-      inject: [ConsecutiveLoginStrategy, CashStrategy, ItemPurchasedStrategy],
+      ): EventConditionStrategy[] => [login, cash, item],
+      inject: [AttendanceStrategy, CashStrategy, ItemPurchasedStrategy],
     },
   ],
   exports: ['REWARD_STRATEGIES'],
 })
-export class RewardStrategyModule {}
+export class ConditionStrategyModule {}

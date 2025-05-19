@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { EventConditionType } from '../../../event/schema/event.type';
-import { RewardConditionStrategy } from './reward-condition.strategy';
+import { EventConditionStrategy } from './event-condition.strategy';
 import { UserAttendanceRepository } from '../../../user-attendance/repository/user-attendance.repository';
 
 @Injectable()
-export class ConsecutiveLoginStrategy implements RewardConditionStrategy {
+export class AttendanceStrategy implements EventConditionStrategy {
   constructor(private readonly userRepository: UserAttendanceRepository) {}
 
   supports(type: string): boolean {
-    return type === EventConditionType.LOGIN;
+    return type === EventConditionType.MONTH_ATTENDANCE;
   }
 
   async check(userId: string, condition: any): Promise<boolean> {
@@ -20,7 +20,7 @@ export class ConsecutiveLoginStrategy implements RewardConditionStrategy {
 }
 
 @Injectable()
-export class CashStrategy implements RewardConditionStrategy {
+export class CashStrategy implements EventConditionStrategy {
   supports(type: string): boolean {
     return type === EventConditionType.USE_CASH;
   }
@@ -33,7 +33,7 @@ export class CashStrategy implements RewardConditionStrategy {
 }
 
 @Injectable()
-export class ItemPurchasedStrategy implements RewardConditionStrategy {
+export class ItemPurchasedStrategy implements EventConditionStrategy {
   supports(type: string): boolean {
     return type === EventConditionType.ITEM_PURCHASE;
   }

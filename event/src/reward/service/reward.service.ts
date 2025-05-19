@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { EventRepository } from '../../event/repository/event.repository';
-import { RewardConditionStrategy } from './strategy/reward-condition.strategy';
+import { EventConditionStrategy } from './strategy/event-condition.strategy';
 import { SuccessRs } from '../../common/rqrs/success.rs';
 import {
   EventRewardType,
@@ -33,10 +33,9 @@ export class RewardService {
     private readonly titleRepository: TitleRepository,
     @InjectConnection() private readonly connection: Connection,
     @Inject('REWARD_STRATEGIES')
-    private readonly strategies: RewardConditionStrategy[],
+    private readonly strategies: EventConditionStrategy[],
   ) {}
 
-  // TODO 트랜잭셔널, 동시성 제어
   async rewardCheck(userId: string, eventId: string): Promise<SuccessRs> {
     const event = await this.eventRepository.findById(eventId);
 

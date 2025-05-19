@@ -1,12 +1,12 @@
 export enum EventConditionType {
-  LOGIN = 'LOGIN',
+  MONTH_ATTENDANCE = 'MONTH_ATTENDANCE',
   USE_CASH = 'USE_CASH',
   ITEM_PURCHASE = 'ITEM_PURCHASE'
 }
 
 export function getEventConditionMean(type: EventConditionType): string {
   switch (type) {
-    case EventConditionType.LOGIN:
+    case EventConditionType.MONTH_ATTENDANCE:
       return '연속 로그인';
     case EventConditionType.USE_CASH:
       return '캐시 사용';
