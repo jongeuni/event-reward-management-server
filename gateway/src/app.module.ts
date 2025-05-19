@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserGatewayModule } from './auth/user.gateway.module';
+import { AuthServerGatewayModule } from './common/module/auth-server.gateway.module';
+import { HttpModule } from '@nestjs/axios';
+import { EventServerGatewayModule } from './common/module/event-server.gateway.module';
 
 @Module({
-  imports: [UserGatewayModule],
+  imports: [HttpModule, AuthServerGatewayModule, EventServerGatewayModule],
   controllers: [AppController],
   providers: [AppService],
 })

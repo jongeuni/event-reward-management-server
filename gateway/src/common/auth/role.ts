@@ -1,6 +1,6 @@
 // roles.decorator.ts
 import { SetMetadata } from '@nestjs/common';
-import { UserRole } from '../../auth/controller/rqrs/user-role';
+import { UserRole } from '../../auth/rqrs/user-role';
 
 export const ROLES_KEY = 'roles';
 

@@ -15,7 +15,14 @@ export class WalletService {
     session.startTransaction();
 
     try {
-      return this.walletRepository.chargeCash(userId, amount, session);
+      const balance = await this.walletRepository.chargeCash(
+        userId,
+        amount,
+        session,
+      );
+      return {
+        balance,
+      };
     } catch (err) {
       await session.abortTransaction();
       throw err;

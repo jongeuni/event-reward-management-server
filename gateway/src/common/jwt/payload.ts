@@ -1,4 +1,4 @@
-import { UserRole } from '../../auth/controller/rqrs/user-role';
+import { UserRole } from '../../auth/rqrs/user-role';
 import { TokenType } from './token-type';
 
 export interface UserPayload {
