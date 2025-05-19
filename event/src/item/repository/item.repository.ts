@@ -15,6 +15,10 @@ export class ItemRepository {
     return this.itemModel.findById(toObjectId(itemId)).lean().exec();
   }
 
+  async existsById(itemId: string) {
+    return this.itemModel.exists({ _id: toObjectId(itemId) });
+  }
+
   async create(userId: string, dto: CreateItemDto): Promise<Item> {
     return this.itemModel.create({
       title: dto.title,

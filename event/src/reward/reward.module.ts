@@ -5,6 +5,8 @@ import { RewardStrategyModule } from './service/strategy/reward-strategy.module'
 import { RewardLogRepositoryModule } from './repository/reward-log.repository.module';
 import { EventRepositoryModule } from '../event/repository/event.repository.module';
 import { WalletRepositoryModule } from '../user-wallet/rqrs/repository/wallet.repository.module';
+import { InventoryRepositoryModule } from '../inventory/repository/inventory.repository.module';
+import { TitleRepositoryModule } from '../title/title.repository.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { WalletRepositoryModule } from '../user-wallet/rqrs/repository/wallet.re
     RewardLogRepositoryModule,
     EventRepositoryModule,
     WalletRepositoryModule,
+    InventoryRepositoryModule,
+    TitleRepositoryModule,
   ],
   controllers: [RewardController],
   providers: [RewardService],

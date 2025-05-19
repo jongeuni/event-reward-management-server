@@ -10,7 +10,7 @@ export class Inventory {
   itemId?: Types.ObjectId[];
 
   @Prop({ type: mongoose.Types.ObjectId })
-  titleId?: Types.ObjectId[];
+  titleId?: Types.ObjectId[]; // 획득일
 }
 
 export type InventoryDocument = HydratedDocument<Inventory>;

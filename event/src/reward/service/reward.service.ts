@@ -16,6 +16,9 @@ import { RewardLogRepository } from '../repository/reward-log.repository';
 import { WalletRepository } from '../../user-wallet/rqrs/repository/wallet.repository';
 import { RewardRequestLog } from '../schema/reward-log';
 import { EventRewardLogRs } from '../rqrs/event-reward-log.rs';
+import { InventoryRepository } from '../../inventory/repository/inventory.repository';
+import { ItemRepository } from '../../item/repository/item.repository';
+import { TitleRepository } from '../../title/title.repository';
 
 @Injectable()
 export class RewardService {
@@ -23,6 +26,9 @@ export class RewardService {
     private readonly eventRepository: EventRepository,
     private readonly rewardLogRepository: RewardLogRepository,
     private readonly walletRepository: WalletRepository,
+    private readonly inventoryRepository: InventoryRepository,
+    private readonly itemRepository: ItemRepository,
+    private readonly titleRepository: TitleRepository,
     @Inject('REWARD_STRATEGIES')
     private readonly strategies: RewardConditionStrategy[],
   ) {}
@@ -75,10 +81,18 @@ export class RewardService {
   async rewardPayment(userId: string, eventId: string, reward: EventReward) {
     switch (reward.type) {
       case EventRewardType.ITEM:
-        // itemId로 아이템 찾아오기
-        // 유저아이템 도큐먼트에... 넣기 (만들어야 한다) - 유저 상자? 배낭? 그런거 만들어서 title이랑 같이 넣어두기
-        // 일단 미구현
-        // 요청 성공 로그 찍기
+        if (
+          !reward.itemId ||
+          (await this.itemRepository.existsById(reward.itemId.toString()))
+        ) {
+          throw new NotFoundException(
+            '보상에 해당하는 아이템을 찾을 수 없습니다.',
+          );
+        }
+        await this.inventoryRepository.updateItem(
+          userId,
+          reward.itemId.toString(),
+        );
         break;
 
       case EventRewardType.CASH:
@@ -90,8 +104,18 @@ export class RewardService {
         break;
 
       case EventRewardType.TITLE:
-        // 유저 배낭에 title 넣기
-        // 요청 성공 로그 찍기
+        if (
+          !reward.titleId ||
+          (await this.titleRepository.existsById(reward.titleId.toString()))
+        ) {
+          throw new NotFoundException(
+            '보상에 해당하는 칭호를 찾을 수 없습니다.',
+          );
+        }
+        await this.inventoryRepository.updateTitle(
+          userId,
+          reward.titleId.toString(),
+        );
         break;
     }
 
