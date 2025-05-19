@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model, Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UserWallet, UserWalletDocument } from '../schema/wallet.schema';
 import { CashLog } from '../../cash-log/cash-log.schema';
 import { CashLogType, CashSourceType } from '../../cash-log/cash-log.type';
@@ -15,57 +15,35 @@ export class WalletRepository {
     private readonly cashLogModel: Model<CashLog>,
   ) {}
 
-  async findByUserId(
-    userId: string,
-    session?: ClientSession,
-  ): Promise<UserWallet | null> {
-    return this.walletModel
-      .findOne({ userId })
-      .session(session ?? null)
-      .lean()
-      .exec();
+  async findByUserId(userId: string): Promise<UserWallet | null> {
+    return this.walletModel.findOne({ userId }).lean().exec();
   }
 
-  async chargeCash(userId: string, amount: number, session: ClientSession) {
-    const wallet = await this.addCash(toObjectId(userId), amount, session);
+  async chargeCash(userId: string, amount: number) {
+    const wallet = await this.addCash(toObjectId(userId), amount);
 
-    await this.cashLogModel.create(
-      [
-        {
-          userId: toObjectId(userId),
-          type: CashLogType.CHARGE,
-          amount,
-          source: CashSourceType.USER,
-          afterBalance: wallet.balance,
-        },
-      ],
-      { session },
-    );
+    await this.cashLogModel.create({
+      userId: toObjectId(userId),
+      type: CashLogType.CHARGE,
+      amount,
+      source: CashSourceType.USER,
+      afterBalance: wallet.balance,
+    });
 
     return wallet.balance;
   }
 
-  async addCashFromEvent(
-    userId: string,
-    amount: number,
-    eventId: string,
-    session: ClientSession,
-  ) {
-    const wallet = await this.addCash(toObjectId(userId), amount, session);
+  async addCashFromEvent(userId: string, amount: number, eventId: string) {
+    const wallet = await this.addCash(toObjectId(userId), amount);
 
-    await this.cashLogModel.create(
-      [
-        {
-          userId: toObjectId(userId),
-          type: CashLogType.BONUS,
-          amount,
-          source: CashSourceType.EVENT,
-          description: `이벤트 보상: ${eventId}`,
-          afterBalance: wallet.balance,
-        },
-      ],
-      { session },
-    );
+    await this.cashLogModel.create({
+      userId: toObjectId(userId),
+      type: CashLogType.BONUS,
+      amount,
+      source: CashSourceType.EVENT,
+      description: `이벤트 보상: ${eventId}`,
+      afterBalance: wallet.balance,
+    });
 
     return wallet;
   }
@@ -74,30 +52,20 @@ export class WalletRepository {
     userId: string,
     itemId: string,
     amount: number,
-    session: ClientSession,
   ): Promise<void> {
-    const wallet = await this.minusCash(userId, amount, session);
+    const wallet = await this.minusCash(userId, amount);
 
-    await this.cashLogModel.create(
-      [
-        {
-          userId: toObjectId(userId),
-          type: CashLogType.USE,
-          amount,
-          source: CashSourceType.USER,
-          itemId: toObjectId(itemId),
-          afterBalance: wallet.balance,
-        },
-      ],
-      { session },
-    );
+    await this.cashLogModel.create({
+      userId: toObjectId(userId),
+      type: CashLogType.USE,
+      amount,
+      source: CashSourceType.USER,
+      itemId: toObjectId(itemId),
+      afterBalance: wallet.balance,
+    });
   }
 
-  private async minusCash(
-    userId: string,
-    amount: number,
-    session: ClientSession,
-  ): Promise<UserWallet> {
+  private async minusCash(userId: string, amount: number): Promise<UserWallet> {
     const wallet = await this.walletModel
       .findOneAndUpdate(
         {
@@ -110,7 +78,6 @@ export class WalletRepository {
         },
         { new: true },
       )
-      .session(session)
       .exec();
 
     if (!wallet) {
@@ -123,7 +90,6 @@ export class WalletRepository {
   private async addCash(
     userId: Types.ObjectId,
     amount: number,
-    session: ClientSession,
   ): Promise<UserWallet> {
     return await this.walletModel
       .findOneAndUpdate(
@@ -134,7 +100,6 @@ export class WalletRepository {
         },
         { upsert: true, new: true, setDefaultsOnInsert: true },
       )
-      .session(session)
       .exec();
   }
 }

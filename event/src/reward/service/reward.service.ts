@@ -19,8 +19,6 @@ import { EventRewardLogRs } from '../rqrs/event-reward-log.rs';
 import { InventoryRepository } from '../../inventory/repository/inventory.repository';
 import { ItemRepository } from '../../item/repository/item.repository';
 import { TitleRepository } from '../../title/title.repository';
-import { InjectConnection } from '@nestjs/mongoose';
-import { ClientSession, Connection } from 'mongoose';
 
 @Injectable()
 export class RewardService {
@@ -31,7 +29,6 @@ export class RewardService {
     private readonly inventoryRepository: InventoryRepository,
     private readonly itemRepository: ItemRepository,
     private readonly titleRepository: TitleRepository,
-    @InjectConnection() private readonly connection: Connection,
     @Inject('REWARD_STRATEGIES')
     private readonly strategies: EventConditionStrategy[],
   ) {}
@@ -78,29 +75,14 @@ export class RewardService {
     }
 
     // 보상 지급 로직
-    const session = await this.connection.startSession();
-    session.startTransaction();
-
-    try {
-      event.rewards.forEach((reward) => {
-        this.rewardPayment(userId, eventId, reward, session);
-      });
-    } catch (err) {
-      await session.abortTransaction();
-      throw err;
-    } finally {
-      await session.endSession();
-    }
+    event.rewards.forEach((reward) => {
+      this.rewardPayment(userId, eventId, reward);
+    });
 
     return new SuccessRs();
   }
 
-  async rewardPayment(
-    userId: string,
-    eventId: string,
-    reward: EventReward,
-    session: ClientSession,
-  ) {
+  async rewardPayment(userId: string, eventId: string, reward: EventReward) {
     switch (reward.type) {
       case EventRewardType.ITEM:
         if (
@@ -114,7 +96,6 @@ export class RewardService {
         await this.inventoryRepository.updateItem(
           userId,
           reward.itemId.toString(),
-          session,
         );
         break;
 
@@ -123,7 +104,6 @@ export class RewardService {
           userId,
           reward.cash ?? 0,
           eventId,
-          session,
         );
         break;
 
@@ -139,7 +119,6 @@ export class RewardService {
         await this.inventoryRepository.updateTitle(
           userId,
           reward.titleId.toString(),
-          session,
         );
         break;
     }
