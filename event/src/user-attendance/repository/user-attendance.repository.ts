@@ -59,4 +59,41 @@ export class UserAttendanceRepository {
       endOfDay,
     };
   }
+
+  async findAttendancesInPeriod(
+    userId: string,
+    startedDate: Date,
+    endedDate?: Date,
+  ): Promise<Date[]> {
+    const startYear = startedDate.getFullYear();
+    const startMonth = startedDate.getMonth() + 1;
+
+    const query: any = {
+      userId: toObjectId(userId),
+    };
+
+    if (endedDate) {
+      const endYear = endedDate.getFullYear();
+      const endMonth = endedDate.getMonth() + 1;
+
+      query.$or = [
+        { year: startYear, month: { $gte: startMonth } },
+        { year: endYear, month: { $lte: endMonth } },
+        {
+          year: { $gt: startYear, $lt: endYear },
+        },
+      ];
+    } else {
+      query.year = startYear;
+      query.month = { $gte: startMonth };
+    }
+
+    const docs = await this.userAttendanceModel.find(query, { dates: 1 });
+
+    return docs.flatMap((doc) =>
+      doc.dates.filter((date) => {
+        return date >= startedDate && (!endedDate || date <= endedDate);
+      }),
+    );
+  }
 }

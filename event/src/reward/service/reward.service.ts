@@ -55,7 +55,12 @@ export class RewardService {
         );
       }
 
-      const checked = await strategy.check(userId, condition);
+      const checked = await strategy.check(
+        userId,
+        condition,
+        event.startedAt,
+        event.endedAt,
+      );
 
       if (!checked) {
         await this.rewardLogRepository.createLog(

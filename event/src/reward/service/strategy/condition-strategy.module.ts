@@ -6,9 +6,10 @@ import {
 import { Module } from '@nestjs/common';
 import { EventConditionStrategy } from './event-condition.strategy';
 import { UserAttendanceRepositoryModule } from '../../../user-attendance/repository/user-attendance.repository.module';
+import { CashLogRepositoryModule } from '../../../cash-log/repository/cash-log.repository.module';
 
 @Module({
-  imports: [UserAttendanceRepositoryModule],
+  imports: [UserAttendanceRepositoryModule, CashLogRepositoryModule],
   providers: [
     AttendanceStrategy,
     CashUseStrategy,
