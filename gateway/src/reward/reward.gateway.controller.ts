@@ -1,4 +1,4 @@
-import { Controller, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { ApiOperation } from '@nestjs/swagger';
@@ -41,7 +41,7 @@ export class RewardGatewayController {
     description: '사용자 본인의 이벤트 보상 요청 목록을 조회합니다.',
   })
   @UseGuards(JwtAuthGuard)
-  @Post('/events/rewards')
+  @Get('/events/rewards')
   async readRewardRequestList(@CurrentUserHeader() headers: RequestHeader) {
     const response = await firstValueFrom(
       this.httpService.get<ReadRewardRequestItemRs[]>(
@@ -56,8 +56,8 @@ export class RewardGatewayController {
     summary: '[어드민] 전체 보상 요청 조회 API',
     description: '전체 보상 요청 목록을 조회합니다.',
   })
-  @Post('/admin/events/rewards')
   @AuthRoleGuard(UserRole.ADMIN)
+  @Get('/admin/events/rewards')
   async readAllRewardRequestList(
     @CurrentUserHeader() headers: RequestHeader,
     @Query('startedAt') startedAt?: Date,

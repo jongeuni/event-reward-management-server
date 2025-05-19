@@ -5,7 +5,7 @@ import {
 } from '../common/user/current-user';
 import { InventoryService } from './inventory.service';
 
-@Controller('/inventory')
+@Controller('/inventories')
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 

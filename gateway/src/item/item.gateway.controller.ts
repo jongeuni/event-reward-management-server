@@ -24,7 +24,7 @@ export class ItemGatewayController {
   })
   @Post('/items/{:itemId}')
   @UseGuards(JwtAuthGuard)
-  async requestReward(
+  async buyItem(
     @Param('itemId') itemId: string,
     @CurrentUserHeader() headers: RequestHeader,
   ) {
