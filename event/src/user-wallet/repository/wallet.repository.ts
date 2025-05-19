@@ -29,13 +29,18 @@ export class WalletRepository {
   async chargeCash(userId: string, amount: number, session: ClientSession) {
     const wallet = await this.addCash(toObjectId(userId), amount, session);
 
-    await this.cashLogModel.create({
-      userId: toObjectId(userId),
-      type: CashLogType.CHARGE,
-      amount,
-      source: CashSourceType.USER,
-      afterBalance: wallet.balance,
-    });
+    await this.cashLogModel.create(
+      [
+        {
+          userId: toObjectId(userId),
+          type: CashLogType.CHARGE,
+          amount,
+          source: CashSourceType.USER,
+          afterBalance: wallet.balance,
+        },
+      ],
+      { session },
+    );
 
     return wallet.balance;
   }
@@ -48,14 +53,19 @@ export class WalletRepository {
   ) {
     const wallet = await this.addCash(toObjectId(userId), amount, session);
 
-    await this.cashLogModel.create({
-      userId: toObjectId(userId),
-      type: CashLogType.BONUS,
-      amount,
-      source: CashSourceType.EVENT,
-      description: `이벤트 보상: ${eventId}`, // 커스텀 필드
-      afterBalance: wallet.balance,
-    });
+    await this.cashLogModel.create(
+      [
+        {
+          userId: toObjectId(userId),
+          type: CashLogType.BONUS,
+          amount,
+          source: CashSourceType.EVENT,
+          description: `이벤트 보상: ${eventId}`,
+          afterBalance: wallet.balance,
+        },
+      ],
+      { session },
+    );
 
     return wallet;
   }
@@ -68,14 +78,19 @@ export class WalletRepository {
   ): Promise<void> {
     const wallet = await this.minusCash(userId, amount, session);
 
-    await this.cashLogModel.create({
-      userId: toObjectId(userId),
-      type: CashLogType.USE,
-      amount,
-      source: CashSourceType.USER,
-      itemId: toObjectId(itemId),
-      afterBalance: wallet.balance,
-    });
+    await this.cashLogModel.create(
+      [
+        {
+          userId: toObjectId(userId),
+          type: CashLogType.USE,
+          amount,
+          source: CashSourceType.USER,
+          itemId: toObjectId(itemId),
+          afterBalance: wallet.balance,
+        },
+      ],
+      { session },
+    );
   }
 
   private async minusCash(
