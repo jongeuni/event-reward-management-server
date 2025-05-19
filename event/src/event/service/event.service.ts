@@ -8,10 +8,12 @@ import {
   EventConditionRs,
   EventRewordRs,
 } from '../rqrs/all-event-item.rs';
-import { EventCondition } from '../schema/event-condition';
-import { EventReward } from '../schema/event-reward';
 import { UserRole } from '../../common/user/current-user';
 import { AddRewardRq } from '../rqrs/add-reward.rq';
+import {
+  EventConditionReadDto,
+  EventRewardReadDto,
+} from '../dto/event-item-read.dto';
 
 @Injectable()
 export class EventService {
@@ -28,26 +30,28 @@ export class EventService {
   }
 
   async readAllEventList(role: UserRole): Promise<AllEventItemRs[]> {
-    const events =
-      role == 'USER'
-        ? await this.eventRepository.findPublic()
-        : await this.eventRepository.findAll();
+    const events = await this.eventRepository.findPublic();
+    // : await this.eventRepository.findAll();
+
+    console.log(events);
 
     return events.map((event) => {
       return new AllEventItemRs(
-        event._id.toString(),
+        event.id,
         event.title,
         event.description ? event.description : null,
         event.startedAt,
         event.endedAt ? event.endedAt : null,
         event.isPrivate,
         this.toConditionsRs(event.conditions),
-        this.toRewordsRs(event.rewards),
+        this.toRewordsRs(event.rewords),
       );
     });
   }
 
-  private toConditionsRs(conditions: EventCondition[]) {
+  private toConditionsRs(
+    conditions: EventConditionReadDto[],
+  ): EventConditionRs[] {
     return conditions.map((condition) => {
       return new EventConditionRs(
         condition.type,
@@ -59,13 +63,15 @@ export class EventService {
     });
   }
 
-  private toRewordsRs(rewards: EventReward[]) {
+  private toRewordsRs(rewards: EventRewardReadDto[]) {
     return rewards.map((reward) => {
       return new EventRewordRs(
         reward.type,
-        reward.itemId?.toString(),
+        reward.item?._id.toString(),
+        reward.item?.title,
         reward.cash,
-        reward.titleId?.toString(),
+        reward.title?._id.toString(),
+        reward.title?.name.toString(),
       );
     });
   }

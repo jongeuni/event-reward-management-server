@@ -36,7 +36,7 @@ export async function initDummy(app: INestApplication) {
     (title) => title.name === '5월의 권위자',
   );
   const whoAmITitle = createdTitles.find(
-    (title) => title.name === '5월의 권위자',
+    (title) => title.name === '내가 왕이 될 상인가',
   );
 
   const startedAt = new Date();

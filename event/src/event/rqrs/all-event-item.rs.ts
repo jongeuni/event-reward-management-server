@@ -29,7 +29,9 @@ export class EventRewordRs {
   constructor(
     public readonly type: EventRewardType,
     public readonly itemId?: string,
+    public readonly itemName?: string,
     public readonly cash?: number,
     public readonly titleId?: string,
+    public readonly titleName?: string,
   ) {}
 }

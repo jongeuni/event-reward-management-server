@@ -5,6 +5,10 @@ import { Event, EventDocument } from '../schema/event';
 import { EventCreateDto, EventRewardDto } from '../dto/event-create.dto';
 import { toObjectId } from '../../common/util/object-id';
 import { EventReward } from '../schema/event-reward';
+import {
+  EventItemReadDto,
+  toEventItemReadDto,
+} from '../dto/event-item-read.dto';
 
 @Injectable()
 export class EventRepository {
@@ -23,8 +27,15 @@ export class EventRepository {
     return this.eventModel.find().lean().exec();
   }
 
-  async findPublic(): Promise<Event[]> {
-    return this.eventModel.find({ isPrivate: false }).lean().exec();
+  async findPublic(): Promise<EventItemReadDto[]> {
+    const events = await this.eventModel
+      .find({ isPrivate: false })
+      .populate({ path: 'rewards.itemId', select: 'title', model: 'Item' })
+      .populate({ path: 'rewards.titleId', select: 'name', model: 'Title' })
+      .lean()
+      .exec();
+
+    return events.map(toEventItemReadDto);
   }
 
   async addRewardByEventId(eventId: string, dtos: EventRewardDto[]) {
