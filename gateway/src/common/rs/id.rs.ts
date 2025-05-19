@@ -1,4 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
 
 export class IdRs {
-  constructor(readonly id: string) {}
+  @ApiProperty()
+  readonly id: string;
 }

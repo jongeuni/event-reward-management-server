@@ -1,20 +1,19 @@
 import { UserRole } from './user-role';
+import { ApiProperty } from '@nestjs/swagger';
 
+export class SignUpRs {
+  @ApiProperty()
+  readonly nickname: string;
 
-/**
- * 회원가입 Rq
- * @namespace SignUpRs
- * @property email      - 아이디
- * @property password     - 비밀번호
- */
-export interface SignUpRs {
-  nickname: string;
+  @ApiProperty()
+  readonly email: string;
 
-  email: string;
+  @ApiProperty()
+  readonly role: UserRole;
 
-  role: UserRole;
+  @ApiProperty()
+  readonly accessToken: string;
 
-  accessToken: string;
-
-  refreshToken: string;
+  @ApiProperty()
+  readonly refreshToken: string;
 }

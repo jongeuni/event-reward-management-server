@@ -5,5 +5,6 @@ import { InventoryRepository } from './repository/inventory.repository';
 export class InventoryService {
   constructor(private readonly inventoryRepository: InventoryRepository) {}
 
+  // TODO
   async readInventory(userId: string) {}
 }

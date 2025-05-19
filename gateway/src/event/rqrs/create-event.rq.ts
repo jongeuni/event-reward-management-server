@@ -1,30 +1,58 @@
-export class EventCreateRq {
-  constructor(
-    public readonly title: string,
-    public readonly description: string,
-    public readonly startedAt: Date,
-    public readonly endedAt: Date | null,
-    public readonly isPrivate: boolean,
-    public readonly conditions: EventConditionRq[],
-    public readonly rewords: EventRewordRq[],
-  ) {}
+import { ApiProperty } from '@nestjs/swagger';
+
+export type EventConditionType = 'ATTENDANCE' | 'USE_CASH' | 'ITEM_PURCHASE';
+export type EventRewardType = 'ITEM' | 'CASH' | 'TITLE';
+
+export class CreateEventRq {
+  @ApiProperty()
+  readonly title: string;
+
+  @ApiProperty()
+  readonly description: string;
+
+  @ApiProperty({ type: Date })
+  readonly startedAt: Date;
+
+  @ApiProperty({ type: Date, nullable: true })
+  readonly endedAt: Date | null;
+
+  @ApiProperty()
+  readonly isPrivate: boolean;
+
+  @ApiProperty({ type: () => [EventConditionRq] })
+  readonly conditions: EventConditionRq[];
+
+  @ApiProperty({ type: () => [EventRewardRq] })
+  readonly rewords: EventRewardRq[];
 }
 
-// 조건
 export class EventConditionRq {
-  constructor(
-    public readonly type: EventConditionType,
-    public readonly days?: number,
-    public readonly cash?: number,
-    public readonly itemId?: string,
-    public readonly count?: number,
-  ) {}
+  @ApiProperty({ enum: ['ATTENDANCE', 'USE_CASH', 'ITEM_PURCHASE'] })
+  readonly type: EventConditionType;
+
+  @ApiProperty({ required: false })
+  readonly days?: number;
+
+  @ApiProperty({ required: false })
+  readonly cash?: number;
+
+  @ApiProperty({ required: false })
+  readonly itemId?: string;
+
+  @ApiProperty({ required: false })
+  readonly count?: number;
 }
 
-// 보상
-export class EventRewordRq {
-  public readonly type: EventRewardType;
-  public readonly itemId?: string;
-  public readonly cash?: number;
-  public readonly titleId?: string;
+export class EventRewardRq {
+  @ApiProperty({ enum: ['ITEM', 'CASH', 'TITLE'] })
+  readonly type: EventRewardType;
+
+  @ApiProperty({ required: false })
+  readonly itemId?: string;
+
+  @ApiProperty({ required: false })
+  readonly cash?: number;
+
+  @ApiProperty({ required: false })
+  readonly titleId?: string;
 }

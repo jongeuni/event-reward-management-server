@@ -10,20 +10,22 @@ import {
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
 import { AUTH_SERVER } from '../common/config/constants';
+import { ApiTags } from '@nestjs/swagger';
 
+// FIXME
+@ApiTags('Admin Controller - 사용자(관리자) 생성')
 @Controller('/v1/admin')
-export class UserGatewayController {
+export class AdminGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
-  // TODO url 추상화
-  @Post('/user')
+  @Post('/users')
   @AuthRoleGuard(UserRole.ADMIN)
   async userCreate(
     @Body() rq: UserCreateRq,
     @CurrentUserHeader() headers: RequestHeader,
   ): Promise<SignUpRs> {
     const response = await firstValueFrom(
-      this.httpService.post<SignUpRs>(`${AUTH_SERVER}/admin/user`, rq, {
+      this.httpService.post<SignUpRs>(`${AUTH_SERVER}/admin/users`, rq, {
         headers,
       }),
     );

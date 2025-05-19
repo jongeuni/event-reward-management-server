@@ -44,7 +44,7 @@ export class RewardService {
     }
 
     if (await this.rewardLogRepository.successLogCheck(eventId, userId)) {
-      throw new BadRequestException('이미 진행한 이벤트입니다.');
+      throw new BadRequestException('이미 참여한 이벤트입니다.');
     }
 
     for (const condition of event.conditions) {

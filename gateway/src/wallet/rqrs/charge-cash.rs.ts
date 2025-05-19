@@ -1,6 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class ChargeCashRs {
-  constructor(
-    public readonly balance: number
-  ) {
-  }
+  @ApiProperty()
+  readonly balance: number;
 }

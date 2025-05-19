@@ -1,13 +1,23 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export type EffectType = 'POWER';
 
 export class CreateItemRq {
-  constructor(
-    public readonly title: string,
-    public readonly description: string,
-    public readonly version: string,
-    public readonly effectType: EffectType,
-    public readonly effectPlus: number,
-    public readonly price: number,
-  ) {}
-}
+  @ApiProperty()
+  public readonly title: string;
 
+  @ApiProperty()
+  public readonly description: string;
+
+  @ApiProperty()
+  public readonly version: string;
+
+  @ApiProperty({ enum: ['POWER'] })
+  public readonly effectType: EffectType;
+
+  @ApiProperty()
+  public readonly effectPlus: number;
+
+  @ApiProperty()
+  public readonly price: number;
+}

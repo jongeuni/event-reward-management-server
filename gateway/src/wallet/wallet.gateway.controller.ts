@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChargeCashRq } from './rqrs/charge-cash.rq';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
@@ -11,6 +11,7 @@ import {
 import { ChargeCashRs } from './rqrs/charge-cash.rs';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 
+@ApiTags('Wallet Controller - 캐쉬 충전')
 @Controller('/v1/wallet')
 export class WalletGatewayController {
   constructor(private readonly httpService: HttpService) {}
@@ -18,6 +19,9 @@ export class WalletGatewayController {
   @ApiOperation({
     summary: '캐쉬 충전 API',
     description: '사용자 캐쉬를 충전합니다.',
+  })
+  @ApiCreatedResponse({
+    type: ChargeCashRs,
   })
   @UseGuards(JwtAuthGuard)
   @Post('/charge')

@@ -1,37 +1,58 @@
-export type EventConditionType = 'ATTENDANCE' | 'USE_CASH' | 'ITEM_PURCHASE';
+import { ApiProperty } from '@nestjs/swagger';
 
+export type EventConditionType = 'ATTENDANCE' | 'USE_CASH' | 'ITEM_PURCHASE';
 export type EventRewardType = 'ITEM' | 'CASH' | 'TITLE';
 
 export class ReadEventItemRs {
-  constructor(
-    public readonly id: string,
-    public readonly title: string,
-    public readonly description: string | null,
-    public readonly startedAt: Date,
-    public readonly endedAt: Date | null,
-    public readonly isPrivate: boolean,
-    public readonly conditions: EventConditionRs[],
-    public readonly rewords: EventRewordRs[],
-  ) {}
+  @ApiProperty()
+  readonly title: string;
+
+  @ApiProperty()
+  readonly description: string;
+
+  @ApiProperty({ type: Date })
+  readonly startedAt: Date;
+
+  @ApiProperty({ type: Date, nullable: true })
+  readonly endedAt: Date | null;
+
+  @ApiProperty()
+  readonly isPrivate: boolean;
+
+  @ApiProperty({ type: () => [EventConditionRs] })
+  readonly conditions: EventConditionRs[];
+
+  @ApiProperty({ type: () => [EventRewardRs] })
+  readonly rewords: EventRewardRs[];
 }
 
-// 조건
 export class EventConditionRs {
-  constructor(
-    public readonly type: EventConditionType,
-    public readonly days?: number,
-    public readonly cash?: number,
-    public readonly itemId?: string,
-    public readonly count?: number,
-  ) {}
+  @ApiProperty({ enum: ['ATTENDANCE', 'USE_CASH', 'ITEM_PURCHASE'] })
+  readonly type: EventConditionType;
+
+  @ApiProperty({ required: false })
+  readonly days?: number;
+
+  @ApiProperty({ required: false })
+  readonly cash?: number;
+
+  @ApiProperty({ required: false })
+  readonly itemId?: string;
+
+  @ApiProperty({ required: false })
+  readonly count?: number;
 }
 
-// 보상
-export class EventRewordRs {
-  constructor(
-    public readonly type: EventRewardType,
-    public readonly itemId?: string,
-    public readonly cash?: number,
-    public readonly titleId?: string,
-  ) {}
+export class EventRewardRs {
+  @ApiProperty({ enum: ['ITEM', 'CASH', 'TITLE'] })
+  readonly type: EventRewardType;
+
+  @ApiProperty({ required: false })
+  readonly itemId?: string;
+
+  @ApiProperty({ required: false })
+  readonly cash?: number;
+
+  @ApiProperty({ required: false })
+  readonly titleId?: string;
 }

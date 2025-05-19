@@ -9,7 +9,7 @@ import {
 export class UserAttendanceController {
   constructor(private readonly userAttendanceService: UserAttendanceService) {}
 
-  @Post('/attendance')
+  @Post('/attendances')
   async attendanceCheck(@CurrentUser() user: CurrentUserType) {
     await this.userAttendanceService.todayAttendanceCheck(user.userId);
   }

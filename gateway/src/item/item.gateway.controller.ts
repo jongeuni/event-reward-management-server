@@ -1,7 +1,12 @@
 import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
   CurrentUserHeader,
@@ -14,6 +19,7 @@ import { UserRole } from '../auth/rqrs/user-role';
 import { CreateItemRq } from './rqrs/create-item.rq';
 import { IdRs } from '../common/rs/id.rs';
 
+@ApiTags('Item Controller - 아이템 구매 및 생성')
 @Controller('/v1')
 export class ItemGatewayController {
   constructor(private readonly httpService: HttpService) {}
@@ -22,6 +28,8 @@ export class ItemGatewayController {
     summary: '아이템 구매 API',
     description: '아이템을 구매합니다.',
   })
+  @ApiBadRequestResponse({ description: '캐쉬 충전이 필요합니다.' })
+  @ApiResponse({ type: SuccessRs })
   @Post('/items/{:itemId}')
   @UseGuards(JwtAuthGuard)
   async buyItem(
@@ -39,6 +47,7 @@ export class ItemGatewayController {
     summary: '[어드민] 아이템 생성 API',
     description: '아이템을 생성(등록)합니다.',
   })
+  @ApiResponse({ type: IdRs })
   @AuthRoleGuard(UserRole.ADMIN)
   @Post('/admin/items')
   async createItem(
@@ -46,7 +55,7 @@ export class ItemGatewayController {
     @CurrentUserHeader() headers: RequestHeader,
   ) {
     const response = await firstValueFrom(
-      this.httpService.post<IdRs[]>(`${EVENT_SERVER}/admin/item`, rq, {
+      this.httpService.post<IdRs>(`${EVENT_SERVER}/admin/item`, rq, {
         headers,
       }),
     );

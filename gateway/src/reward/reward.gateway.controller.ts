@@ -1,7 +1,13 @@
 import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
   CurrentUserHeader,
@@ -13,6 +19,7 @@ import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 import { AuthRoleGuard } from '../common/auth/auth-role.guard';
 import { UserRole } from '../auth/rqrs/user-role';
 
+@ApiTags('Reward Controller - 보상 요청 및 조회')
 @Controller('/v1')
 export class RewardGatewayController {
   constructor(private readonly httpService: HttpService) {}
@@ -21,6 +28,13 @@ export class RewardGatewayController {
     summary: '보상 요청 API',
     description: '이벤트에 대한 보상을 요청합니다.',
   })
+  @ApiNotFoundResponse({
+    description: '이벤트를 찾을 수 없습니다.',
+  })
+  @ApiBadRequestResponse({
+    description: '이미 참여한 이벤트입니다.',
+  })
+  @ApiResponse({ type: SuccessRs })
   @UseGuards(JwtAuthGuard)
   @Post('/events/{:eventId}/rewards')
   async requestReward(
@@ -40,6 +54,7 @@ export class RewardGatewayController {
     summary: '보상 요청 조회 API',
     description: '사용자 본인의 이벤트 보상 요청 목록을 조회합니다.',
   })
+  @ApiResponse({ type: [ReadRewardRequestItemRs] })
   @UseGuards(JwtAuthGuard)
   @Get('/events/rewards')
   async readRewardRequestList(@CurrentUserHeader() headers: RequestHeader) {
@@ -56,6 +71,7 @@ export class RewardGatewayController {
     summary: '[어드민] 전체 보상 요청 조회 API',
     description: '전체 보상 요청 목록을 조회합니다.',
   })
+  @ApiResponse({ type: [ReadRewardRequestItemRs] })
   @AuthRoleGuard(UserRole.ADMIN)
   @Get('/admin/events/rewards')
   async readAllRewardRequestList(

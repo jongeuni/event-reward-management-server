@@ -1,12 +1,20 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export type EventRewardType = 'ITEM' | 'CASH' | 'TITLE' | 'NONE';
 
 export class ReadRewardRequestItemRs {
-  constructor(
-    private eventId: string,
-    private userId: string,
-    private type: EventRewardType,
-    private isSuccess: boolean,
-    private requestedAt: Date,
-  ) {}
-}
+  @ApiProperty()
+  readonly eventId: string;
 
+  @ApiProperty()
+  readonly userId: string;
+
+  @ApiProperty({ enum: ['ITEM', 'CASH', 'TITLE', 'NONE'] })
+  readonly type: EventRewardType;
+
+  @ApiProperty()
+  readonly isSuccess: boolean;
+
+  @ApiProperty()
+  readonly requestedAt: Date;
+}
