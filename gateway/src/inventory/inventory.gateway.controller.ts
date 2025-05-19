@@ -1,7 +1,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
   CurrentUserHeader,
@@ -10,6 +15,7 @@ import {
 import { SuccessRs } from '../common/rs/success.rs';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Inventory Controller - 사용자 인벤토리 조회')
 @Controller('/v1/inventories')
 export class InventoryGatewayController {

@@ -8,8 +8,8 @@ export class JwtUtil {
 
   private readonly access_secret_key = 'test';
   private readonly refresh_secret_key = 'test';
-  private readonly access_expires_in = '5m';
-  private readonly refresh_expires_in = '5m';
+  private readonly access_expires_in = '5123123m';
+  private readonly refresh_expires_in = '5123123123m';
 
   async createJwtToken(id: string, email: string, role: UserRole) {
     const [accessToken, refreshToken] = await Promise.all([
@@ -29,6 +29,7 @@ export class JwtUtil {
         id,
         email,
         role,
+        type: 'ACCESS_TOKEN',
       },
       {
         secret: this.access_secret_key,
@@ -48,6 +49,7 @@ export class JwtUtil {
         id,
         email,
         role,
+        type: 'REFRESH_TOKEN',
       },
       {
         secret: this.refresh_secret_key,

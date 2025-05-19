@@ -1,7 +1,12 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ChargeCashRq } from './rqrs/charge-cash.rq';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
@@ -11,6 +16,7 @@ import {
 import { ChargeCashRs } from './rqrs/charge-cash.rs';
 import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Wallet Controller - 캐쉬 충전')
 @Controller('/v1/wallet')
 export class WalletGatewayController {
@@ -29,11 +35,15 @@ export class WalletGatewayController {
     @Body() rq: ChargeCashRq,
     @CurrentUserHeader() headers: RequestHeader,
   ) {
+    console.log(headers['role'] + '머야ㅑㅑ');
+    console.log('2');
     const response = await firstValueFrom(
       this.httpService.post<ChargeCashRs>(`${EVENT_SERVER}/wallet/charge`, rq, {
         headers,
       }),
     );
+    console.log('1');
+    console.log(response);
     return response.data;
   }
 }

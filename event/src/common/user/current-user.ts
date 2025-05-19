@@ -14,8 +14,8 @@ export interface CurrentUser {
 export const CurrentUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): CurrentUser => {
     const request = ctx.switchToHttp().getRequest();
-    const userId = request.headers['x-user-id'];
-    const role = request.headers['x-role'];
+    const userId = request.headers['user_id'];
+    const role = request.headers['role'];
 
     if (!userId || !role) {
       throw new UnauthorizedException('확인할 수 없는 사용자입니다.');

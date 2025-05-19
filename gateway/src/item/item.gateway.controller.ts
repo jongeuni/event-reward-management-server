@@ -3,6 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -19,6 +20,7 @@ import { UserRole } from '../auth/rqrs/user-role';
 import { CreateItemRq } from './rqrs/create-item.rq';
 import { IdRs } from '../common/rs/id.rs';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Item Controller - 아이템 구매 및 생성')
 @Controller('/v1')
 export class ItemGatewayController {

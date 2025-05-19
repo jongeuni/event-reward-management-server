@@ -10,9 +10,10 @@ import {
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
 import { AUTH_SERVER } from '../common/config/constants';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 // FIXME
+@ApiBearerAuth('Access-Token')
 @ApiTags('Admin Controller - 사용자(관리자) 생성')
 @Controller('/v1/admin')
 export class AdminGatewayController {

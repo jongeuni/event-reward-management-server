@@ -1,7 +1,12 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EVENT_SERVER } from '../common/config/constants';
 import {
   CurrentUserHeader,
@@ -15,6 +20,7 @@ import { CreateEventRq } from './rqrs/create-event.rq';
 import { ReadEventItemRs } from './rqrs/read-event.item.rs';
 import { AddRewardRq } from './rqrs/add-reward.rq';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Event Controller - 이벤트 생성 및 조회, 보상 추가')
 @Controller('/v1')
 export class EventGatewayController {

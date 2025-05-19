@@ -9,7 +9,6 @@ export interface UserPayload {
 
 export interface AccessPayload extends UserPayload {
   type: TokenType.ACCESS_TOKEN;
-  name: string;
   role: UserRole;
 }
 

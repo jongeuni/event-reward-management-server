@@ -3,6 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOperation,
   ApiResponse,
@@ -19,6 +20,7 @@ import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
 import { AuthRoleGuard } from '../common/auth/auth-role.guard';
 import { UserRole } from '../auth/rqrs/user-role';
 
+@ApiBearerAuth('Access-Token')
 @ApiTags('Reward Controller - 보상 요청 및 조회')
 @Controller('/v1')
 export class RewardGatewayController {

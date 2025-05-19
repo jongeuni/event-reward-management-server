@@ -14,7 +14,7 @@ export async function initDummy(app: INestApplication) {
 
   if (await itemRepository.itemModel.exists({})) {
     console.log('이미 일부 데이터가 존재하므로 더미 데이터 삽입을 건너뜁니다.');
-    await app.close();
+    // await app.close();
     return;
   }
 
