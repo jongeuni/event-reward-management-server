@@ -26,6 +26,20 @@ export class WalletRepository {
       .exec();
   }
 
+  async chargeCash(userId: string, amount: number, session: ClientSession) {
+    const wallet = await this.addCash(toObjectId(userId), amount, session);
+
+    await this.cashLogModel.create({
+      userId: toObjectId(userId),
+      type: CashLogType.CHARGE,
+      amount,
+      source: CashSourceType.USER,
+      afterBalance: wallet.balance,
+    });
+
+    return wallet.balance;
+  }
+
   async addCashFromEvent(
     userId: string,
     amount: number,

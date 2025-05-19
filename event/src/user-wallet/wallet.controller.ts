@@ -1,18 +1,22 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ChargeCashRq } from './rqrs/charge-cash.rq';
-import { UseCashRq } from './rqrs/use-cash.rq';
+import { WalletService } from './wallet.service';
+import {
+  CurrentUser as CurrentUserType,
+  CurrentUser,
+} from '../common/user/current-user';
 
 @Controller('/wallet')
 export class WalletController {
-  // 캐쉬 사용 (예: 아이템 구매, 조건 만족용)
-  @Post('/use')
-  async useCash(@Body() rq: UseCashRq) {}
+  constructor(private readonly walletService: WalletService) {}
 
-  // ✅ 캐쉬 충전 (관리자 지급, 유료 결제 후 콜백 등 (캐쉬 지급 타입 필요))
+  // 캐쉬 충전
+  // 응답값으로 현재 잔액
   @Post('/charge')
-  async chargeCash(@Body() rq: ChargeCashRq) {}
-
-  // ✅ 전체 캐쉬 내역 조회 (선택)
-  @Get('/logs')
-  async getCashLogs() {}
+  async chargeCash(
+    @CurrentUser() user: CurrentUserType,
+    @Body() rq: ChargeCashRq,
+  ) {
+    return this.walletService.chargeCash(user.userId, rq.amount);
+  }
 }
