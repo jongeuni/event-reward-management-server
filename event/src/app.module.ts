@@ -8,11 +8,12 @@ import { WalletModule } from './user-wallet/wallet.module';
 import { RewardModule } from './reward/reward.module';
 import { ItemModule } from './item/item.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { DB_URL } from './common/constants/constants';
 
 @Module({
   imports: [
-    // MongooseModule.forRoot('mongodb://mongodb:27017/event-db'),
-    MongooseModule.forRoot('mongodb://localhost:27017/event-db'),
+    MongooseModule.forRoot(DB_URL),
+    // MongooseModule.forRoot('mongodb://localhost:27017/event-db'),
     UserAttendanceModule,
     EventModule,
     WalletModule,

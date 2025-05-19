@@ -1,15 +1,16 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { UserRole } from '../../user/user-role';
+import { SECRET_KEY } from '../../common/constants/constants';
 
 @Injectable()
 export class JwtUtil {
   constructor(private readonly jwtService: JwtService) {}
 
-  private readonly access_secret_key = 'test';
-  private readonly refresh_secret_key = 'test';
-  private readonly access_expires_in = '5123123m';
-  private readonly refresh_expires_in = '5123123123m';
+  private readonly access_secret_key = SECRET_KEY;
+  private readonly refresh_secret_key = SECRET_KEY;
+  private readonly access_expires_in = '1440m';
+  private readonly refresh_expires_in = '10080m';
 
   async createJwtToken(id: string, email: string, role: UserRole) {
     const [accessToken, refreshToken] = await Promise.all([

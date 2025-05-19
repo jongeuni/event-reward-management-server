@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+ENV DB_URL=mongodb://mongodb:27017/auth-db
+ENV SECRET_KEY=test_key
+
 RUN npm run build
 
 CMD ["node", "dist/main"]

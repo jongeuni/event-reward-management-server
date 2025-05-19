@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+ENV DB_URL=mongodb://mongodb:27017/event-db
+
 RUN npm run build
+
+
 
 CMD ["node", "dist/main"]
