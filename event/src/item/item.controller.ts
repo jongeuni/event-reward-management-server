@@ -11,7 +11,7 @@ import { IdRs } from '../common/rqrs/Id.rs';
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
-  @Post('/user/item/{:itemId}')
+  @Post('/item/{:itemId}')
   async itemPurchase(
     @CurrentUser() user: CurrentUserType,
     @Param('itemId') itemId: string,
@@ -19,7 +19,7 @@ export class ItemController {
     await this.itemService.buyItem(user.userId, itemId);
   }
 
-  @Post('/item')
+  @Post('/admin/item')
   async createItem(
     @CurrentUser() user: CurrentUserType,
     @Body() rq: ItemCreateRq,

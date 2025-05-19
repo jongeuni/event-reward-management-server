@@ -10,18 +10,18 @@ import { SuccessRs } from '../common/rqrs/success.rs';
 export class RewardController {
   constructor(private readonly rewardService: RewardService) {}
 
-  @Post('/event/{:eventId}/rewards') // 보상 요청 API
-  async requestRewards(
+  @Post('/events/{:eventId}/rewards') // 보상 요청 API
+  async requestReward(
     @CurrentUser() user: CurrentUserType,
     @Param('eventId') eventId: string,
   ): Promise<SuccessRs> {
     return this.rewardService.rewardCheck(user.userId, eventId);
   }
 
-  @Get('/admin/event/rewards') // 보상 요청 조회 API
+  @Get('/admin/events/rewards') // 보상 요청 조회 API
   async readRewardsRequest(
-    @Query('startedAt') startedAt: Date,
-    @Query('endedAt') endedAt: Date,
+    @Query('startedAt') startedAt?: Date,
+    @Query('endedAt') endedAt?: Date,
   ) {
     return this.rewardService.readAllEventRewardLog(startedAt, endedAt);
   }

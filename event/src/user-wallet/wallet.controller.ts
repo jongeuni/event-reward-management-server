@@ -10,8 +10,6 @@ import {
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
-  // 캐쉬 충전
-  // 응답값으로 현재 잔액
   @Post('/charge')
   async chargeCash(
     @CurrentUser() user: CurrentUserType,
