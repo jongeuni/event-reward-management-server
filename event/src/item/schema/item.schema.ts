@@ -18,7 +18,7 @@ export class Item {
   version: string;
 
   @Prop({ type: ItemEffectSchema, required: false })
-  effects: ItemEffect;
+  effect: ItemEffect;
 
   @Prop()
   price: number;

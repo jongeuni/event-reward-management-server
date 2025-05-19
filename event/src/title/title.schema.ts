@@ -11,8 +11,8 @@ export class Title {
   @Prop()
   description: string;
 
-  @Prop()
-  isSuccess: boolean;
+  // @Prop()
+  // isSuccess: boolean;
 
   @Prop({ type: mongoose.Types.ObjectId })
   createdBy: Types.ObjectId;

@@ -8,7 +8,7 @@ import { toObjectId } from '../common/util/object-id';
 export class TitleRepository {
   constructor(
     @InjectModel(Title.name)
-    private readonly titleModel: Model<TitleDocument>,
+    readonly titleModel: Model<TitleDocument>,
   ) {}
 
   async existsById(titleId: string) {
