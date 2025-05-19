@@ -1,4 +1,4 @@
-import { Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventRepository } from '../repository/event.repository';
 import { EventCreateRq } from '../rqrs/event-create.rq';
 import { IdRs } from '../../common/rqrs/Id.rs';
@@ -13,7 +13,7 @@ import { EventReward } from '../schema/event-reward';
 import { UserRole } from '../../common/user/current-user';
 import { AddRewardRq } from '../rqrs/add-reward.rq';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class EventService {
   constructor(private readonly eventRepository: EventRepository) {}
 

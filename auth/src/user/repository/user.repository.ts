@@ -1,24 +1,21 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { User, UserDocument } from '../user';
 import { Model } from 'mongoose';
 import { UserCreateDto } from '../dto/user-create.dto';
 import { InjectModel } from '@nestjs/mongoose';
 
-@Injectable({scope: Scope.REQUEST})
+@Injectable()
 export class UserRepository {
   constructor(
-    @InjectModel(User.name) readonly accountModel: Model<UserDocument>
-  ) {
-  }
+    @InjectModel(User.name) readonly userModel: Model<UserDocument>,
+  ) {}
 
   async create(createUserDto: UserCreateDto): Promise<User> {
-    return await this.accountModel.create(createUserDto);
+    return await this.userModel.create(createUserDto);
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.accountModel.findOne({email}).lean().exec();
+    return this.userModel.findOne({ email }).lean().exec();
   }
-
-
 }
