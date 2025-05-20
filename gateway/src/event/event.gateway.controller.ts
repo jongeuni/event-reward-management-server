@@ -35,7 +35,7 @@ export class EventGatewayController {
     type: [ReadEventItemRs],
   })
   @UseGuards(JwtAuthGuard)
-  @Get('/admin/events')
+  @Get('/events')
   async readEventList(@CurrentUserHeader() headers: RequestHeader) {
     const response = await firstValueFrom(
       this.httpService.get<ReadEventItemRs[]>(`${EVENT_SERVER}/events`, {

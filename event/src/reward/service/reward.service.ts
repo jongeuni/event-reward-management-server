@@ -59,6 +59,8 @@ export class RewardService {
         event.endedAt,
       );
 
+      console.log(checked);
+
       if (!checked) {
         await this.rewardLogRepository.createLog(
           eventId,

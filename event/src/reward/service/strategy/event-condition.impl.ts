@@ -70,7 +70,7 @@ export class ItemPurchasedStrategy implements EventConditionStrategy {
 
       const { count } = condition;
 
-      if(itemBuyLog.length >= (count ?? 0)) {
+      if(itemBuyLog.length >= (count ?? 1)) {
         return true;
       }
     }

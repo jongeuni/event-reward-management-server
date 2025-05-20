@@ -8,7 +8,5 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3002);
   app.useGlobalFilters(new CustomExceptionFilter());
   await initDummy(app);
-
-  console.log('Mongo URI:', process.env.MONGO_URI);
 }
 bootstrap();

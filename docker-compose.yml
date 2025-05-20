@@ -25,8 +25,8 @@ services:
     build:
       context: ./auth
     container_name: auth
-    ports:
-      - "3001:3001"
+#    ports:
+#      - "3001:3001"
     environment:
       - MONGO_URI=mongodb://mongodb:27017/auth-db
     depends_on:
@@ -38,8 +38,8 @@ services:
     build:
       context: ./event
     container_name: event
-    ports:
-      - "3002:3002"
+#    ports:
+#      - "3002:3002"
     environment:
       - MONGO_URI=mongodb://mongodb:27017/event-db
     depends_on:

@@ -106,6 +106,7 @@ export async function initDummy(app: INestApplication) {
       {
         type: EventConditionType.ITEM_PURCHASE,
         itemId: nudugyItem?._id,
+        count: 1,
       },
     ],
     rewards: [
