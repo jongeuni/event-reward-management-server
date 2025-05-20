@@ -133,18 +133,31 @@ export function AuthRoleGuard(...roles: UserRole[]) {
 @AuthRoleGuard(UserRole.ADMIN, UserRole.AUDITOR, UserRole.OPERATOR)
 ```
 
+<details>
+<summary><b>사용자 캐시(돈) 관리 방안</b></summary>
+
+현재 캐시와 관련한 도큐먼트는 사용자 **지갑 도큐먼트**와 **캐시 로그 도큐먼트**가 있습니다.
+
+사용자 지갑 도큐먼트는 사용자의 현재 잔고를 기록하고, 캐시 사용 로그는 모든 사용과 충전 로그를 기록하게 됩니다.
+
+이때, 지갑 도큐먼트에 일어나는 모든 일들은 필수적으로 캐시 사용 로그에 들어가야 했습니다.
+
+예시로 아이템을 구매와 충전 등과 관련된 행위를 하면 1) 사용자 지갑(잔액) 정보 업데이트 2) 캐시 로그 생성 의 플로우로 진행합니다.
+
+이 상황에서 로그를 service 단이 아니라 repository 단에서 한번에 쌓아도 되는지에 대한 고민이 생겼습니다. 
+
+그렇게 되면 WalletRepository에서 CashLogSchema와의 의존성이 생기게 되지만, 로그가 필수적으로 들어가야한다는 조건에 있어서 더 안정적이게 된다는 장점이 있었습니다.
+
+고민 결과 둘은 묶여서 함께 일어나야하는 작업이라고 판단하였고, 서비스 단에서 따로 로그 생성을 요청하는 것이 불안정하고 실수할 확률이 높아진다고 생각하여 WalletRepository에서 CashLogSchema의 의존을 추가하였습니다.
+  
+</details>
+
+
 </details>
 
 <details>
 <summary>mongoose populate 사용 vs 단일 조회</summary>
 
-</details>
-
-<details>
-<summary>사용자 캐시(돈) 관리 방안</summary>
-
-  둘이 동작이 함께 일어나야함. repository단에서 묶어도 
-  
 </details>
 
 <br>
