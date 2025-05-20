@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomExceptionFilter } from './common/custom.exception.filter';
+import { CustomExceptionFilter } from './common/exception/custom.exception.filter';
 import { initDummy } from './dummy/init-dummy';
 
 async function bootstrap() {

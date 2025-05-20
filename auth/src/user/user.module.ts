@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './controller/user.controller';
+import { UserController } from './user.controller';
 import { UserService } from './service/user.service';
 import { UserRepositoryModule } from './repository/user.repository.module';
 import { JwtModule } from '../auth/jwt/jwt.module';
@@ -8,7 +8,7 @@ import { JwtModule } from '../auth/jwt/jwt.module';
   imports: [
     // MongooseModule.forFeature([{ name: Account.name, schema: AccountSchema }]),
     UserRepositoryModule,
-    JwtModule
+    JwtModule,
   ],
   controllers: [UserController],
   providers: [UserService],

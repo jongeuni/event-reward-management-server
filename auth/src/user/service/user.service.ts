@@ -4,15 +4,15 @@ import {
   NotFoundException,
   Scope,
 } from '@nestjs/common';
-import { SignUpRq } from '../controller/rqrs/sign-up.rq';
-import { SignUpRs } from '../controller/rqrs/sign-up.rs';
+import { SignUpRq } from '../rqrs/sign-up.rq';
+import { SignUpRs } from '../rqrs/sign-up.rs';
 import { UserRepository } from '../repository/user.repository';
-import { User } from '../user';
+import { User } from '../schema/user';
 import * as bcrypt from 'bcrypt';
-import { SignInRq } from '../controller/rqrs/sign-in.rq';
-import { SignInRs } from '../controller/rqrs/sign-in.rs';
+import { SignInRq } from '../rqrs/sign-in.rq';
+import { SignInRs } from '../rqrs/sign-in.rs';
 import { JwtUtil } from '../../auth/jwt/jwt.util';
-import { CreateUserRq } from '../controller/rqrs/create-user.rq';
+import { CreateUserRq } from '../rqrs/create-user.rq';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserService {

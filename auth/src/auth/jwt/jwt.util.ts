@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { UserRole } from '../../user/user-role';
+import { UserRole } from '../../user/schema/user-role';
 import { SECRET_KEY } from '../../common/constants/constants';
 
 @Injectable()

@@ -1,8 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserService } from '../service/user.service';
+import { UserService } from './service/user.service';
 import { SignUpRq } from './rqrs/sign-up.rq';
 import { SignInRq } from './rqrs/sign-in.rq';
 import { CreateUserRq } from './rqrs/create-user.rq';
+import { CreateUserRs } from './rqrs/create-user.rs';
 
 @Controller()
 export class UserController {
@@ -19,7 +20,7 @@ export class UserController {
   }
 
   @Post('/admin/users') // 비밀번호는 디폴트로 다 동일하게 지정
-  async createUser(@Body() rq: CreateUserRq) {
+  async createUser(@Body() rq: CreateUserRq): Promise<CreateUserRs> {
     return this.userService.createUser(rq);
   }
 }
