@@ -1,3 +1,5 @@
+MSA 환경에서의 이벤트 프로젝트입니다.
+<br>
 ### 실행 방법
 
 프로젝트 루트에서 명령어를 실행합니다.
@@ -5,7 +7,7 @@
 `docker-compose up --build --force-recreate`
 <br><br>
 
-### 1. 프로젝트 구성
+### <mark style='background-color: #f6f8fa'>1. 프로젝트 구성</mark>
 
 #### - 개발환경
 
@@ -14,10 +16,10 @@
 ✅ NesetJS 최신버전
 
 #### - 프로젝트 구성
-
-(프로젝트 구조사진)
+<img width="725" alt="image" src="https://github.com/user-attachments/assets/5fa4ff52-2278-4a4a-b250-64b2646ca91f" />
 <br><br>
-### 2. 테스트 설명 & 초기 데이터
+
+### <mark style='background-color: #f6f8fa'>2. 테스트 설명 & 초기 데이터</mark>
 
 #### 📋 스웨거: http://localhost:3000/api-docs
 
@@ -29,7 +31,7 @@
 - **기본 어드민 계정**
     - email: admin01 / password: admin01
 <br><br>
-### 3. API 목록
+### <mark style='background-color: #f6f8fa'>3. API 목록</mark>
 
 - **요구 API** (필수 API)
     - 회원가입 API / 로그인 API / 어드민 사용자 생성 API (역할 관리)
@@ -39,9 +41,7 @@
 - 테스트
     - 이벤트 보상 조건 테스트 작성 `event-condition.spec.ts`
 <br><br>
-### 4. 이벤트 종류 설명
-
-(스키마 사진)
+### <mark style='background-color: #f6f8fa'>4. 이벤트 종류 설명</mark>
 #### - 이벤트 조건
 현재 이벤트는 ‘출석일’, ‘특정 아이템 구매’, ‘캐시 사용’의 조건을 등록할 수 있습니다.
 - **출석일**(ATTENDANCE): n일 이상의 출석일 이벤트 조건
@@ -54,8 +54,9 @@
 - **아이템**(ITEM)
 - **캐시**(CASH)
 - **칭호**(TITLE)
-<br><br>
-### 고민 지점
+<br>
+
+### <mark style='background-color: #f6f8fa'>5. 고민 지점</mark>
 <details>
 <summary>사용자 캐시(돈) 관리 방안</summary>
 
@@ -86,6 +87,10 @@ return 'test';
 ```
 
 </details>
+<br>
 
-### 기타
-(전체 스키마 사진)
+### <mark style='background-color: #f6f8fa'>6. 기타</mark>
+
+👇 **Event ERD**
+
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/841f089d-f906-4f7e-a9ea-2ce371d83712" />
