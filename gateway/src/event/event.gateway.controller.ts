@@ -7,13 +7,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { EVENT_SERVER } from '../common/config/constants';
+import { EVENT_SERVER } from '../common/constants/constants';
 import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
-import { AuthRoleGuard } from '../common/auth/auth-role.guard';
+import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
+import { AuthRoleGuard } from '../common/auth/guard/auth-role.guard';
 import { UserRole } from '../auth/rqrs/user-role';
 import { IdRs } from '../common/rs/id.rs';
 import { CreateEventRq } from './rqrs/create-event.rq';

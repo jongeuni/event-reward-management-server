@@ -2,12 +2,12 @@ import { Controller, Post, UseGuards } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EVENT_SERVER } from '../common/config/constants';
+import { EVENT_SERVER } from '../common/constants/constants';
 import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
 
 @ApiBearerAuth('Access-Token')
 @ApiTags('Attendance Controller - 유저 출석')

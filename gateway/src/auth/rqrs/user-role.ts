@@ -1,4 +1,5 @@
 // export type UserRole = 'USER' | 'OPERATOR' | 'AUDITOR' | 'ADMIN';
+
 export enum UserRole {
   USER = 'USER',
   OPERATOR = 'OPERATOR',

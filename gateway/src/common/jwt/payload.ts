@@ -1,5 +1,4 @@
 import { UserRole } from '../../auth/rqrs/user-role';
-import { TokenType } from './token-type';
 
 export interface UserPayload {
   type: TokenType.ACCESS_TOKEN | TokenType.REFRESH_TOKEN;
@@ -14,4 +13,9 @@ export interface AccessPayload extends UserPayload {
 
 export interface RefreshPayload extends UserPayload {
   type: TokenType.REFRESH_TOKEN;
+}
+
+export enum TokenType {
+  REFRESH_TOKEN = 'REFRESH_TOKEN',
+  ACCESS_TOKEN = 'ACCESS_TOKEN',
 }

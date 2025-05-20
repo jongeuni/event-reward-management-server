@@ -8,13 +8,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ChargeCashRq } from './rqrs/charge-cash.rq';
-import { EVENT_SERVER } from '../common/config/constants';
+import { EVENT_SERVER } from '../common/constants/constants';
 import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
 import { ChargeCashRs } from './rqrs/charge-cash.rs';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
 
 @ApiBearerAuth('Access-Token')
 @ApiTags('Wallet Controller - 캐쉬 충전')

@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { SignInRq } from './rqrs/sign-in.rq';
 import { SignInRs } from './rqrs/sign-in.rs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AUTH_SERVER } from '../common/config/constants';
+import { AUTH_SERVER } from '../common/constants/constants';
 
 @ApiTags('Auth Controller - 로그인')
 @Controller('/v1/auth')

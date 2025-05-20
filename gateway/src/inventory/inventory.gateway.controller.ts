@@ -7,13 +7,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { EVENT_SERVER } from '../common/config/constants';
+import { EVENT_SERVER } from '../common/constants/constants';
 import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
 import { SuccessRs } from '../common/rs/success.rs';
-import { JwtAuthGuard } from '../common/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
 
 @ApiBearerAuth('Access-Token')
 @ApiTags('Inventory Controller - 사용자 인벤토리 조회')

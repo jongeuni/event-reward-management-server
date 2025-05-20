@@ -5,7 +5,5 @@ import { AuthModule } from './common/auth/auth.module';
 
 @Module({
   imports: [AuthServerGatewayModule, EventServerGatewayModule, AuthModule],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

@@ -4,12 +4,12 @@ import { HttpService } from '@nestjs/axios';
 import { SignUpRs } from '../auth/rqrs/sign-up.rs';
 import { UserCreateRq } from './rqrs/user-create.rq';
 import { UserRole } from '../auth/rqrs/user-role';
-import { AuthRoleGuard } from '../common/auth/auth-role.guard';
+import { AuthRoleGuard } from '../common/auth/guard/auth-role.guard';
 import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
-import { AUTH_SERVER } from '../common/config/constants';
+import { AUTH_SERVER } from '../common/constants/constants';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,

@@ -1,9 +1,9 @@
 // roles.guard.ts
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UserRole } from '../../auth/rqrs/user-role';
-import { ROLES_KEY } from './role';
-import { AccessPayload } from '../jwt/payload';
+import { UserRole } from '../../../auth/rqrs/user-role';
+import { ROLES_KEY } from '../role';
+import { AccessPayload } from '../../jwt/payload';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
