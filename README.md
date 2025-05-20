@@ -1,11 +1,16 @@
-MSA 환경에서의 이벤트 프로젝트입니다.
+MSA 환경에서의 이벤트/보상 관리 시스템입니다.
+
 <br>
+
 ### 실행 방법
 
 프로젝트 루트에서 명령어를 실행합니다.
 
-`docker-compose up --build --force-recreate`
-<br><br>
+**`docker-compose up --build --force-recreate`**
+
+npm install 시 cli v10을 사용해주세요. (`npm install`, `npm install -g @nestjs/cli@10`)
+
+<br>
 
 ### <mark style='background-color: #f6f8fa'>1. 프로젝트 구성</mark>
 
@@ -57,12 +62,6 @@ MSA 환경에서의 이벤트 프로젝트입니다.
 <br>
 
 ### <mark style='background-color: #f6f8fa'>5. 고민 지점</mark>
-<details>
-<summary>사용자 캐시(돈) 관리 방안</summary>
-
-  둘이 동작이 함께 일어나야함. repository단에서 묶어도 
-  
-</details>
 
 <details>
 <summary><b>Gateway → 타 서버 요청 시 2차 인증 필요성</b></summary>
@@ -105,24 +104,49 @@ export const CurrentUser = createParamDecorator(
 
 </details>
 
+
+
+<details>
+<summary><b>Role과 Guard 중복 사용</b></summary>
+
+인증과 인가 처리를 할 경우 각각 `@UserGuards()`와 `@Roles()`을 **별도로 지정해줘야 하는 번거로움**이 있었습니다. 만약 인증과 인가 처리를 동시에 진행할 경우 아래와 같이 작성해야 했습니다.
+
+```ts
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('admin')
+@Get('test')
+getTest() {
+  return 'test';
+}
+```
+
+인증과 인가를 같이 처리하는 경우가 많았기에 이를 두 번 선언할 필요가 없다고 생각하였고,
+
+권한 처리가 필요할 경우 두 데코레이터를 하나의 커스텀 데코레이터로 묶어 한 번에 사용할 수 있도록 만들어주었습니다.
+
+```ts
+export function AuthRoleGuard(...roles: UserRole[]) {
+  return applyDecorators(Roles(roles), UseGuards(JwtAuthGuard, RolesGuard));
+}
+
+👇 아래와 같이 사용
+@AuthRoleGuard(UserRole.ADMIN, UserRole.AUDITOR, UserRole.OPERATOR)
+```
+
+</details>
+
 <details>
 <summary>mongoose populate 사용 vs 단일 조회</summary>
 
 </details>
 
 <details>
-<summary>Role과 Guard 중복 사용</summary>
+<summary>사용자 캐시(돈) 관리 방안</summary>
 
-```tsx
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('admin')
-@Get('test')
-getTest() {
-return 'test';
-    }
-```
-
+  둘이 동작이 함께 일어나야함. repository단에서 묶어도 
+  
 </details>
+
 <br>
 
 ### <mark style='background-color: #f6f8fa'>6. 기타</mark>
