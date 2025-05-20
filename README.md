@@ -133,6 +133,8 @@ export function AuthRoleGuard(...roles: UserRole[]) {
 @AuthRoleGuard(UserRole.ADMIN, UserRole.AUDITOR, UserRole.OPERATOR)
 ```
 
+</details>
+
 <details>
 <summary><b>사용자 캐시(돈) 관리 방안</b></summary>
 
@@ -150,9 +152,6 @@ export function AuthRoleGuard(...roles: UserRole[]) {
 
 고민 결과 둘은 묶여서 함께 일어나야하는 작업이라고 판단하였고, 서비스 단에서 따로 로그 생성을 요청하는 것이 불안정하고 실수할 확률이 높아진다고 생각하여 WalletRepository에서 CashLogSchema의 의존을 추가하였습니다.
   
-</details>
-
-
 </details>
 
 <details>
