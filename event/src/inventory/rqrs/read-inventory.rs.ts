@@ -1,25 +1,24 @@
 export class ReadInventoryRs {
   constructor(
-    public readonly titles: OwnTitleRs[],
-    public readonly items: OwnItemRs[]
+    readonly titles: OwnTitleRs[],
+    readonly items: OwnItemRs[]
   ) {
   }
 }
 
 export class OwnTitleRs {
   constructor(
-    public readonly titleId: string,
-    public readonly titleName: string,
-    public readonly getDate: Date
+    readonly titleId: string,
+    readonly titleName: string,
+    readonly getDate: Date
   ) {
   }
 }
 
 export class OwnItemRs {
   constructor(
-    public readonly itemId: string,
-    public readonly itemName: string,
-    // public readonly itemCount: number
+    readonly itemId: string,
+    readonly itemName: string
   ) {
   }
 }

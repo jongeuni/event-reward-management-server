@@ -17,7 +17,7 @@ import { ChargeCashRs } from './rqrs/charge-cash.rs';
 import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
 
 @ApiBearerAuth('Access-Token')
-@ApiTags('Wallet Controller - 캐쉬 충전')
+@ApiTags('Wallet Controller - 캐시 충전')
 @Controller('/v1/wallet')
 export class WalletGatewayController {
   constructor(private readonly httpService: HttpService) {}

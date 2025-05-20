@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserAttendanceModule } from './user-attendance/user-attendance.module';
 import { EventModule } from './event/event.module';
@@ -22,6 +21,5 @@ import { DB_URL } from './common/constants/constants';
     InventoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

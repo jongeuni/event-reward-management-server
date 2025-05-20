@@ -12,8 +12,8 @@ import {
   CurrentUserHeader,
   RequestHeader,
 } from '../common/auth/auth.current-user-header';
-import { SuccessRs } from '../common/rs/success.rs';
 import { JwtAuthGuard } from '../common/auth/guard/jwt-auth.guard';
+import { ReadInventoryRs } from './rqrs/read-inventory.rs';
 
 @ApiBearerAuth('Access-Token')
 @ApiTags('Inventory Controller - 사용자 인벤토리 조회')
@@ -25,13 +25,12 @@ export class InventoryGatewayController {
     summary: '인벤토리 조회 API',
     description: '인벤토리에 있는 아이템들을 조회합니다.',
   })
-  @ApiResponse({ type: SuccessRs })
+  @ApiResponse({ type: ReadInventoryRs })
   @Get()
   @UseGuards(JwtAuthGuard)
-  // 미개발
   async readInventory(@CurrentUserHeader() headers: RequestHeader) {
     await firstValueFrom(
-      this.httpService.get<SuccessRs>(`${EVENT_SERVER}/inventories`, {
+      this.httpService.get<ReadInventoryRs>(`${EVENT_SERVER}/inventories`, {
         headers,
       }),
     );
