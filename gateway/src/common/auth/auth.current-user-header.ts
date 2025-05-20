@@ -21,6 +21,6 @@ export const CurrentUserHeader = createParamDecorator(
 );
 
 export interface RequestHeader extends Record<string, string> {
-  user_id: string;
-  role: UserRole;
+  readonly user_id: string;
+  readonly role: UserRole;
 }
