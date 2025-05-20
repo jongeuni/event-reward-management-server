@@ -68,7 +68,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
         },
         { provide: ItemRepository, useValue: commonMocks.itemRepository },
         { provide: TitleRepository, useValue: commonMocks.titleRepository },
-        { provide: 'REWARD_STRATEGIES', useValue: [] }, // 각 describe에서 직접 할당
+        { provide: 'REWARD_STRATEGIES', useValue: [] }, // 각 조건에 따라 할당
       ],
     }).compile();
 
@@ -76,7 +76,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
   });
 
   describe('출석 조건', () => {
-    it('조건 만족 시 보상 지급', async () => {
+    it('조건 만족: 보상 지급', async () => {
       const strategy = createMockStrategy(true);
       const event = mockEvent(
         [{ type: EventConditionType.ATTENDANCE, days: 3 }],
@@ -91,7 +91,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
       expect(commonMocks.walletRepository.addCashFromEvent).toHaveBeenCalled();
     });
 
-    it('조건 불만족 시 보상 미지급', async () => {
+    it('조건 불만족: 보상 미지급', async () => {
       const strategy = createMockStrategy(false);
       const event = mockEvent([{ type: EventConditionType.ATTENDANCE }]);
 
@@ -107,7 +107,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
   });
 
   describe('캐시 사용 조건', () => {
-    it('조건 만족 시 보상 지급', async () => {
+    it('조건 만족: 보상 지급', async () => {
       const strategy = createMockStrategy(true);
       const event = mockEvent(
         [{ type: EventConditionType.USE_CASH }],
@@ -122,7 +122,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
       expect(commonMocks.walletRepository.addCashFromEvent).toHaveBeenCalled();
     });
 
-    it('조건 불만족 시 보상 미지급', async () => {
+    it('조건 불만족: 보상 미지급', async () => {
       const strategy = createMockStrategy(false);
       const event = mockEvent([{ type: EventConditionType.USE_CASH }]);
 
@@ -138,7 +138,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
   });
 
   describe('아이템 구매 조건', () => {
-    it('조건 만족 시 보상 지급', async () => {
+    it('조건 만족: 보상 지급', async () => {
       const strategy = createMockStrategy(true);
       const event = mockEvent(
         [{ type: EventConditionType.ITEM_PURCHASE }],
@@ -158,7 +158,7 @@ describe('이벤트 조건에 따른 보상 지급 테스트', () => {
       expect(commonMocks.inventoryRepository.updateItem).toHaveBeenCalled();
     });
 
-    it('조건 불만족 시 보상 미지급', async () => {
+    it('조건 불만족: 보상 미지급', async () => {
       const strategy = createMockStrategy(false);
       const event = mockEvent([{ type: EventConditionType.ITEM_PURCHASE }]);
 

@@ -23,8 +23,8 @@ export class WalletGatewayController {
   constructor(private readonly httpService: HttpService) {}
 
   @ApiOperation({
-    summary: '캐쉬 충전 API',
-    description: '사용자 캐쉬를 충전합니다.',
+    summary: '캐시 충전 API',
+    description: '사용자 캐시를 충전합니다.',
   })
   @ApiCreatedResponse({
     type: ChargeCashRs,
