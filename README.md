@@ -1,52 +1,91 @@
-# event-reward-management-server
-실행 방법 (Docker Compose)<br>
-docker-compose build --no-cache
-docker-compose up
+### 실행 방법
 
-version<br>
-Node.js 18<br>
-NestJS 최신<br>
-<br><br>
-과제 내용<br>
-실무에서 자주 사용되는 패턴을 학습하고, 실제 서비스에 적용 가능한 이벤트 및 보상 관리 시스템을 직접 설계하고 구현합니다.<br>
-<br><br>
-요구사항<br>
-유저 대상 이벤트가 많은데, 조건 확인 및 보상 지급이 수작업임.<br>
-* 현재 조건 달성 여부를 엑셀로 수작업 중<br>
--> 조건 검증 로직과 보상 지급 자동화 필요<br>
-운영자: 이벤트 생성 및 보상 설정 / 유저 요청 시 자동 지급 (or 검토)<br>
-유저: 조건 만족 후 직접 요청<br>
-감사 담당자: 지급 내역만 조회 가능<br>
-* 인증과 권한 시스템 필요<br>
+프로젝트 루트에서 명령어를 실행합니다.
 
+`docker-compose up --build --force-recreate`
 <br><br>
 
-서버 구성<br>
-gateway server : 모든 API 요청의 진입점, 인증, 권한 검사 및 라우팅<br>
-- 모든 요청을 받아 라우팅 수행<br>
-- JWT 토큰 검증 및 Role 검사<br>
-- NestJS의 @nestjs/passport , AuthGuard , RolesGuard 사용<br>
+### 1. 프로젝트 구성
 
-auth server : 유저 정보 관리, 로그인, 역할 관리, JWT 발급<br>
-- 유저 등록 / 로그인 / 역할 관리<br>
-- JWT 관리<br>
+#### - 개발환경
 
-event server : 이벤트 생성, 보상 정의, 보상 요청 처리, 지급 상태 저장<br>
-- 이벤트 등록 / 조회 API<br>
-- 보상 등록 / 조회 API (각 보상은 어떤 이벤트와 연결되는지 명확해야 함)<br>
-- 보상 요청 API (요청 상태 로그 필요)<br>
-- 보상 요청 내역 확인 (필터링 기능 선택적 구현)<br>
+✅ Node.js 18 (고정)
 
+✅ NesetJS 최신버전
+
+#### - 프로젝트 구성
+
+(프로젝트 구조사진)
+<br><br>
+### 2. 테스트 설명 & 초기 데이터
+
+#### 📋 스웨거: http://localhost:3000/api-docs
+
+- 스웨거에 각 API별 설명이 들어있습니다.
+
+#### ⚙️ 초기 데이터 세팅
+
+- 어드민 계정, 아이템, 칭호, 이벤트가 테스트를 위한 초기 데이터로 세팅됩니다. `init-dummy.ts`
+- **기본 어드민 계정**
+    - email: admin01 / password: admin01
+<br><br>
+### 3. API 목록
+
+- **요구 API** (필수 API)
+    - 회원가입 API / 로그인 API / 어드민 사용자 생성 API (역할 관리)
+    - 이벤트 생성 API / 이벤트 목록 조회 API / 이벤트 보상 추가 API / 사용자 보상 요청 API / 보상 요청 이력 확인 API (사용자) / 보상 요청 이력 확인 API (관리자)
+- **추가 API** (이벤트를 위한 추가 API)
+    - 캐시 충전 API / 아이템 구매 API / 아이템 생성 API / 출석 체크 API / 인벤토리 조회 API
+- 테스트
+    - 이벤트 보상 조건 테스트 작성 `event-condition.spec.ts`
+<br><br>
+### 4. 이벤트 종류 설명
+
+(스키마 사진)
+#### - 이벤트 조건
+현재 이벤트는 ‘출석일’, ‘특정 아이템 구매’, ‘캐시 사용’의 조건을 등록할 수 있습니다.
+- **출석일**(ATTENDANCE): n일 이상의 출석일 이벤트 조건
+- **아이템 구매**(ITEM_PURCHASE): 특정 아이템 구매 이벤트 조건
+- **캐시 사용**(USE_CASH): n원 이상의 캐시 사용 이벤트 조건
+
+#### - 이벤트 보상
+
+이벤트 보상으로 등록할 수 있는 보상은 다음과 같습니다.
+- **아이템**(ITEM)
+- **캐시**(CASH)
+- **칭호**(TITLE)
+<br><br>
 ### 고민 지점
-#### Event 서버의 인증<br>
-Gateway에서 Event서버에 접근하지만 Event 서버의 인증을 풀어놓으면 불안정하다는 생각이 들었습니다.<br>
-그러나 인증을 한 번 더 거치면, 중복 코드와 불필요한 의존성 문제가 생기게 된다고 생각하였습니다.<br>
-보안 수준과 복잡도 간의 트레이드 오프 상황이라고 생각하였고,<br>
-현재 수준에서는 Event 서버에서는 최소한의 체크만 하도록 구현하였습니다.<br>
-Event 서버의 포트를 외부에 노출하지 않고 Gateway만 접근하도록 구성하여 Event가 내부 요청만 처리하도록 함으로써 외부 노출 위험을 방지하였습니다.<br>
-결론적으로 Gateway에서만 JWT 검증하고, Event 서버는 Gateway만 신뢰하는 구조로 Event 내부에서 인증을 한 번 더 거치지는 않지만 내부 호출에 대한 제한을 설정해 보안성을 유지했습니다.<br>
+<details>
+<summary>사용자 캐시(돈) 관리 방안</summary>
 
-### 추후 고도화 방향
-1. 각 서버 간 중복 제거 (rq rs 모델이 gateway랑 중복됨)<br>
-2. kafka를 통한 이벤트 통신 (더 복잡한 이벤트들이 들어왔을 경우)<br>
-3. 
+  둘이 동작이 함께 일어나야함. repository단에서 묶어도 
+  
+</details>
+
+<details>
+<summary>Gateway → 타 서버 요청 시 2차 인증 필요성</summary>
+
+</details>
+
+<details>
+<summary>mongoose populate 사용 vs 단일 조회</summary>
+
+</details>
+
+<details>
+<summary>Role과 Guard 중복 사용</summary>
+
+```tsx
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('admin')
+@Get('test')
+getTest() {
+return 'test';
+    }
+```
+
+</details>
+
+### 기타
+(전체 스키마 사진)
