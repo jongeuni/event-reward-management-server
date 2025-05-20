@@ -112,7 +112,7 @@ export class RewardService {
       case EventRewardType.TITLE:
         if (
           !reward.titleId ||
-          (await this.titleRepository.existsById(reward.titleId.toString()))
+          !(await this.titleRepository.existsById(reward.titleId.toString()))
         ) {
           throw new NotFoundException(
             '보상에 해당하는 칭호를 찾을 수 없습니다.',

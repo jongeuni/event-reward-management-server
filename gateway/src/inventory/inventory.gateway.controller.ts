@@ -28,11 +28,14 @@ export class InventoryGatewayController {
   @ApiResponse({ type: ReadInventoryRs })
   @Get()
   @UseGuards(JwtAuthGuard)
-  async readInventory(@CurrentUserHeader() headers: RequestHeader) {
-    await firstValueFrom(
+  async readInventory(
+    @CurrentUserHeader() headers: RequestHeader,
+  ): Promise<ReadInventoryRs> {
+    const response = await firstValueFrom(
       this.httpService.get<ReadInventoryRs>(`${EVENT_SERVER}/inventories`, {
         headers,
       }),
     );
+    return response.data;
   }
 }

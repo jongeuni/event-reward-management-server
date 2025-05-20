@@ -18,6 +18,7 @@ export const CurrentUser = createParamDecorator(
     const role = request.headers['role'];
 
     console.log(userId + '  ' + role);
+
     if (!userId || !role) {
       throw new UnauthorizedException('확인할 수 없는 사용자입니다.');
     }

@@ -1,23 +1,44 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { MongoServerError } from 'mongodb';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Response } from 'express';
+import { MongoServerError } from 'mongodb';
 
-@Catch(MongoServerError)
+@Catch()
 export class CustomExceptionFilter implements ExceptionFilter {
-  catch(exception: MongoServerError, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    // Duplicate key error code
-    if (exception.code === 11000) {
-      return response
-        .status(400)
-        .json({ message: '이미 존재하는 값입니다.', error: exception.message });
+    if (exception instanceof HttpException) {
+      const status = exception.getStatus();
+      const message = exception.getResponse();
+      return response.status(status).json({
+        message,
+      });
     }
 
-    // 기본 처리
-    return response
-      .status(500)
-      .json({ message: '서버 에러', error: exception.message });
+    if (exception instanceof MongoServerError && exception.code === 11000) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        message: '이미 존재하는 값입니다.',
+        error: exception.message,
+      });
+    }
+
+    if (exception instanceof Error) {
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        message: '서버 내부 오류가 발생했습니다.',
+        error: exception.message,
+      });
+    }
+
+    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      message: '알 수 없는 오류가 발생했습니다.',
+      error: String(exception),
+    });
   }
 }
