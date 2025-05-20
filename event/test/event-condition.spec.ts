@@ -5,7 +5,7 @@ import { RewardLogRepository } from '../src/reward/repository/reward-log.reposit
 import { WalletRepository } from '../src/user-wallet/repository/wallet.repository';
 import { InventoryRepository } from '../src/inventory/repository/inventory.repository';
 import { ItemRepository } from '../src/item/repository/item.repository';
-import { TitleRepository } from '../src/title/title.repository';
+import { TitleRepository } from '../src/title/repository/title.repository';
 import { EventCondition } from '../src/event/schema/event-condition';
 import {
   EventConditionType,

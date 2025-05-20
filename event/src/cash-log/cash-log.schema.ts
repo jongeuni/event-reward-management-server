@@ -1,4 +1,3 @@
-// cash-log.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { CashLogType, CashSourceType } from './cash-log.type';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
@@ -20,7 +19,7 @@ export class CashLog {
   source: CashSourceType;
 
   @Prop({ type: mongoose.Types.ObjectId })
-  itemId?: Types.ObjectId
+  itemId?: Types.ObjectId;
 
   @Prop()
   description?: string; // '관리자 지급 시 description'

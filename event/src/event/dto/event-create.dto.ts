@@ -1,9 +1,9 @@
 import { EventConditionType, EventRewardType } from '../schema/event.type';
 import {
+  CreateEventRq,
   EventConditionRq,
-  EventCreateRq,
   EventRewordRq,
-} from '../rqrs/event-create.rq';
+} from '../rqrs/create-event.rq';
 
 export class EventCreateDto {
   constructor(
@@ -16,7 +16,7 @@ export class EventCreateDto {
     public readonly rewords: EventRewardDto[],
   ) {}
 
-  static from(rq: EventCreateRq): EventCreateDto {
+  static from(rq: CreateEventRq): EventCreateDto {
     return new EventCreateDto(
       rq.title,
       rq.description,

@@ -30,11 +30,14 @@ export class RewardLogRepository {
   }
 
   async successLogCheck(eventId: string, userId: string) {
-    return this.rewordLogModel.exists({
-      eventId: toObjectId(eventId),
-      userId: toObjectId(userId),
-      isSuccess: true,
-    });
+    return this.rewordLogModel
+      .exists({
+        eventId: toObjectId(eventId),
+        userId: toObjectId(userId),
+        isSuccess: true,
+      })
+      .lean()
+      .exec();
   }
 
   async findByCreatedAt(
@@ -53,7 +56,7 @@ export class RewardLogRepository {
       }
     }
 
-    return this.rewordLogModel.find(query).exec();
+    return this.rewordLogModel.find(query).lean().exec();
   }
 
   async findByUserId(userId: string): Promise<RewardRequestLog[]> {

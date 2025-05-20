@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Title, TitleSchema } from './title.schema';
+import { Title, TitleSchema } from '../title.schema';
 import { TitleRepository } from './title.repository';
 
 @Module({

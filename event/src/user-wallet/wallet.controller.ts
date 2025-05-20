@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ChargeCashRq } from './rqrs/charge-cash.rq';
-import { WalletService } from './wallet.service';
+import { WalletService } from './service/wallet.service';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
-} from '../common/user/current-user';
+} from '../common/auth/current-user';
 
 @Controller('/wallet')
 export class WalletController {

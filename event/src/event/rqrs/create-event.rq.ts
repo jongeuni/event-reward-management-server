@@ -1,6 +1,6 @@
 import { EventConditionType, EventRewardType } from '../schema/event.type';
 
-export class EventCreateRq {
+export class CreateEventRq {
   constructor(
     public readonly title: string,
     public readonly description: string,

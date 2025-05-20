@@ -3,7 +3,7 @@ import { UserAttendanceService } from './service/user-attendance.service';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
-} from '../common/user/current-user';
+} from '../common/auth/current-user';
 
 @Controller()
 export class UserAttendanceController {

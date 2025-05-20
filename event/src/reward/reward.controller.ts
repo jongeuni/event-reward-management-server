@@ -2,9 +2,9 @@ import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
-} from '../common/user/current-user';
+} from '../common/auth/current-user';
 import { RewardService } from './service/reward.service';
-import { SuccessRs } from '../common/rqrs/success.rs';
+import { SuccessRs } from '../common/rs/success.rs';
 
 @Controller()
 export class RewardController {

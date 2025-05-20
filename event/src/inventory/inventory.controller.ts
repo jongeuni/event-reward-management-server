@@ -2,8 +2,8 @@ import { Controller, Get } from '@nestjs/common';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
-} from '../common/user/current-user';
-import { InventoryService } from './inventory.service';
+} from '../common/auth/current-user';
+import { InventoryService } from './service/inventory.service';
 
 @Controller('/inventories')
 export class InventoryController {

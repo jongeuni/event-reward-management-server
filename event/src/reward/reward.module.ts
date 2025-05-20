@@ -6,7 +6,7 @@ import { RewardLogRepositoryModule } from './repository/reward-log.repository.mo
 import { EventRepositoryModule } from '../event/repository/event.repository.module';
 import { WalletRepositoryModule } from '../user-wallet/repository/wallet.repository.module';
 import { InventoryRepositoryModule } from '../inventory/repository/inventory.repository.module';
-import { TitleRepositoryModule } from '../title/title.repository.module';
+import { TitleRepositoryModule } from '../title/repository/title.repository.module';
 import { ItemRepositoryModule } from '../item/repository/item.repository.module';
 
 @Module({

@@ -1,4 +1,4 @@
-import { TitleRepository } from '../title/title.repository';
+import { TitleRepository } from '../title/repository/title.repository';
 import { ItemRepository } from '../item/repository/item.repository';
 import { EventRepository } from '../event/repository/event.repository';
 import {
@@ -14,7 +14,6 @@ export async function initDummy(app: INestApplication) {
 
   if (await itemRepository.itemModel.exists({})) {
     console.log('이미 일부 데이터가 존재하므로 더미 데이터 삽입을 건너뜁니다.');
-    // await app.close();
     return;
   }
 

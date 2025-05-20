@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { EventService } from './service/event.service';
-import { EventCreateRq } from './rqrs/event-create.rq';
-import { IdRs } from '../common/rqrs/Id.rs';
+import { CreateEventRq } from './rqrs/create-event.rq';
+import { IdRs } from '../common/rs/Id.rs';
 import { AllEventItemRs } from './rqrs/all-event-item.rs';
 import {
   CurrentUser,
   CurrentUser as CurrentUserType,
-} from '../common/user/current-user';
+} from '../common/auth/current-user';
 import { AddRewardRq } from './rqrs/add-reward.rq';
 
 @Controller()
@@ -16,7 +16,7 @@ export class EventController {
   @Post('/admin/events')
   async createEvent(
     @CurrentUser() user: CurrentUserType,
-    @Body() rq: EventCreateRq,
+    @Body() rq: CreateEventRq,
   ): Promise<IdRs> {
     return this.eventService.createEvent(rq, user.userId);
   }
@@ -33,7 +33,7 @@ export class EventController {
     @Param('eventId') eventId: string,
     @Body() rq: AddRewardRq[],
   ) {
-    // 보상 추가 시 이미 받은 유저들에게 추가된 보상을 지급하는 로직이 필요할듯!!
+    // 추후엔 보상 추가 시 이미 받은 유저들에게 추가된 보상을 지급하는 로직이 필요할듯!!
     await this.eventService.addRewards(eventId, rq);
   }
 }

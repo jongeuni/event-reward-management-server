@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ItemRepository } from '../repository/item.repository';
-import { ItemCreateRq } from '../rqrs/item-create.rq';
+import { CreateItemRq } from '../rqrs/create-item.rq';
 import { Item } from '../schema/item.schema';
-import { IdRs } from '../../common/rqrs/Id.rs';
+import { IdRs } from '../../common/rs/Id.rs';
 import { WalletRepository } from '../../user-wallet/repository/wallet.repository';
 import { InventoryRepository } from '../../inventory/repository/inventory.repository';
 import { UserWallet } from '../../user-wallet/schema/wallet.schema';
@@ -19,7 +19,7 @@ export class ItemService {
     private readonly inventoryRepository: InventoryRepository,
   ) {}
 
-  async createItem(userId: string, rq: ItemCreateRq): Promise<IdRs> {
+  async createItem(userId: string, rq: CreateItemRq): Promise<IdRs> {
     const item: Item = await this.itemRepository.create(userId, rq);
     return {
       id: item._id.toString(),

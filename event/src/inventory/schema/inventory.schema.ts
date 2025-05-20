@@ -7,6 +7,8 @@ import {
   OwnTitleSchema,
 } from './own-item.schema';
 
+export type InventoryDocument = HydratedDocument<Inventory>;
+
 @Schema({ timestamps: true })
 export class Inventory {
   @Prop({ required: true, type: mongoose.Types.ObjectId })
@@ -19,5 +21,4 @@ export class Inventory {
   titleId?: OwnTitle[];
 }
 
-export type InventoryDocument = HydratedDocument<Inventory>;
 export const InventorySchema = SchemaFactory.createForClass(Inventory);

@@ -2,10 +2,10 @@ import { Body, Controller, Param, Post } from '@nestjs/common';
 import {
   CurrentUser as CurrentUserType,
   CurrentUser,
-} from '../common/user/current-user';
+} from '../common/auth/current-user';
 import { ItemService } from './service/item.service';
-import { ItemCreateRq } from './rqrs/item-create.rq';
-import { IdRs } from '../common/rqrs/Id.rs';
+import { CreateItemRq } from './rqrs/create-item.rq';
+import { IdRs } from '../common/rs/Id.rs';
 
 @Controller()
 export class ItemController {
@@ -16,14 +16,13 @@ export class ItemController {
     @CurrentUser() user: CurrentUserType,
     @Param('itemId') itemId: string,
   ): Promise<void> {
-    console.log('hii');
     await this.itemService.buyItem(user.userId, itemId);
   }
 
   @Post('/admin/item')
   async createItem(
     @CurrentUser() user: CurrentUserType,
-    @Body() rq: ItemCreateRq,
+    @Body() rq: CreateItemRq,
   ): Promise<IdRs> {
     return this.itemService.createItem(user.userId, rq);
   }

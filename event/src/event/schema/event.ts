@@ -5,6 +5,8 @@ import { EventCondition, EventConditionSchema } from './event-condition';
 import { EventReward, EventRewardSchema } from './event-reward';
 import { EventCreateDto } from '../dto/event-create.dto';
 
+export type EventDocument = HydratedDocument<Event>;
+
 @Schema({ timestamps: true })
 export class Event {
   _id: Types.ObjectId;
@@ -33,8 +35,6 @@ export class Event {
   @Prop()
   createdBy?: Types.ObjectId;
 
-  // rq.itemId == undefined ? undefined : toObjectId(rq.itemId),
-
   constructor(dto: EventCreateDto, userId: Types.ObjectId) {
     this.title = dto.title;
     this.description = dto.description;
@@ -49,5 +49,4 @@ export class Event {
   }
 }
 
-export type EventDocument = HydratedDocument<Event>;
 export const EventSchema = SchemaFactory.createForClass(Event);

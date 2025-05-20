@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InventoryRepository } from './repository/inventory.repository';
-import { ReadInventoryRs } from './rqrs/read-inventory.rs';
+import { InventoryRepository } from '../repository/inventory.repository';
+import { ReadInventoryRs } from '../rqrs/read-inventory.rs';
 
 @Injectable()
 export class InventoryService {

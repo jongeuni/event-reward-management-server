@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Title, TitleDocument } from './title.schema';
-import { toObjectId } from '../common/util/object-id';
+import { Title, TitleDocument } from '../title.schema';
+import { toObjectId } from '../../common/util/object-id';
 
 @Injectable()
 export class TitleRepository {

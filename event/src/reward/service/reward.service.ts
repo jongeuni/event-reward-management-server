@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { EventRepository } from '../../event/repository/event.repository';
 import { EventConditionStrategy } from './strategy/event-condition.strategy';
-import { SuccessRs } from '../../common/rqrs/success.rs';
+import { SuccessRs } from '../../common/rs/success.rs';
 import {
   EventRewardType,
   getEventConditionMean,
@@ -18,7 +18,7 @@ import { RewardRequestLog } from '../schema/reward-log';
 import { EventRewardLogRs } from '../rqrs/event-reward-log.rs';
 import { InventoryRepository } from '../../inventory/repository/inventory.repository';
 import { ItemRepository } from '../../item/repository/item.repository';
-import { TitleRepository } from '../../title/title.repository';
+import { TitleRepository } from '../../title/repository/title.repository';
 
 @Injectable()
 export class RewardService {

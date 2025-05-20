@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 
+export type UserAttendanceDocument = HydratedDocument<UserAttendance>;
+
 @Schema({ timestamps: true })
 export class UserAttendance {
   @Prop({ required: true, type: mongoose.Types.ObjectId })
@@ -16,5 +18,5 @@ export class UserAttendance {
   dates: Date[];
 }
 
-export type UserAttendanceDocument = HydratedDocument<UserAttendance>;
-export const UserAttendanceSchema = SchemaFactory.createForClass(UserAttendance);
+export const UserAttendanceSchema =
+  SchemaFactory.createForClass(UserAttendance);

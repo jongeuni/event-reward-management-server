@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { EventRepository } from '../repository/event.repository';
-import { EventCreateRq } from '../rqrs/event-create.rq';
-import { IdRs } from '../../common/rqrs/Id.rs';
+import { CreateEventRq } from '../rqrs/create-event.rq';
+import { IdRs } from '../../common/rs/Id.rs';
 import { EventCreateDto } from '../dto/event-create.dto';
 import {
   AllEventItemRs,
   EventConditionRs,
   EventRewordRs,
 } from '../rqrs/all-event-item.rs';
-import { UserRole } from '../../common/user/current-user';
+import { UserRole } from '../../common/auth/current-user';
 import { AddRewardRq } from '../rqrs/add-reward.rq';
 import {
   EventConditionReadDto,
@@ -19,7 +19,7 @@ import {
 export class EventService {
   constructor(private readonly eventRepository: EventRepository) {}
 
-  async createEvent(rq: EventCreateRq, userId: string): Promise<IdRs> {
+  async createEvent(rq: CreateEventRq, userId: string): Promise<IdRs> {
     const event = await this.eventRepository.save(
       EventCreateDto.from(rq),
       userId,
