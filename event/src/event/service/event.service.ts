@@ -30,10 +30,10 @@ export class EventService {
   }
 
   async readAllEventList(role: UserRole): Promise<AllEventItemRs[]> {
-    const events = await this.eventRepository.findPublic();
-    // : await this.eventRepository.findAll();
-
-    console.log(events);
+    const events =
+      role == 'USER'
+        ? await this.eventRepository.findPublic()
+        : await this.eventRepository.findAll();
 
     return events.map((event) => {
       return new AllEventItemRs(

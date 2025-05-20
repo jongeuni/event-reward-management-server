@@ -10,7 +10,7 @@ export class OwnTitleRs {
   constructor(
     public readonly titleId: string,
     public readonly titleName: string,
-    public readonly getDated: Date
+    public readonly getDate: Date
   ) {
   }
 }
@@ -19,7 +19,7 @@ export class OwnItemRs {
   constructor(
     public readonly itemId: string,
     public readonly itemName: string,
-    public readonly itemCount: number
+    // public readonly itemCount: number
   ) {
   }
 }

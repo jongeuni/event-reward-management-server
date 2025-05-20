@@ -23,8 +23,15 @@ export class EventRepository {
   async findById(eventId: string): Promise<Event | null> {
     return this.eventModel.findById(toObjectId(eventId)).lean().exec();
   }
-  async findAll(): Promise<Event[]> {
-    return this.eventModel.find().lean().exec();
+  async findAll(): Promise<EventItemReadDto[]> {
+    const events = await this.eventModel
+      .find()
+      .populate({ path: 'rewards.itemId', select: 'title', model: 'Item' })
+      .populate({ path: 'rewards.titleId', select: 'name', model: 'Title' })
+      .lean()
+      .exec();
+
+    return events.map(toEventItemReadDto);
   }
 
   async findPublic(): Promise<EventItemReadDto[]> {
